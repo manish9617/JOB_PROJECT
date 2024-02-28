@@ -1,0 +1,51 @@
+.card {
+  background-color: rgb(248, 252, 248);
+  width: 350px;
+  margin-left: 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 30px;
+}
+
+.header {
+  flex-grow: 1;
+}
+.closeButton {
+  right: 10;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.company h{
+  font-weight: 500;
+}
+.company p{
+  font-weight: 15;
+  margin-top: -8px;
+}
+
+.time{
+  padding-top: 10px;
+  display: flex;
+}
+.time p{
+  padding: 2px 5px;
+  background-color: rgb(230, 230, 230);
+  border-radius: 3px;
+}
+
+.extra{
+  padding: 2px 5px;
+  margin-top: 3px;
+  display: flex;
+  flex-wrap: wrap;
+}
+/* Responsive Styles */
+@media (max-width: 600px) {
+  .card {
+    width: 100%;
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,36 @@
+/* PostJob.css */
+/* PostJob.css */
+
+.container {
+/* Set a maximum height */
+  height: 90vh;
+  overflow-y: auto; /* Enable vertical scrollbar */
+  scroll-behavior: smooth;
+}
+
+.job-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  
+  overflow-y: scroll;
+}
+
+.job-form label {
+  font-weight: bold;
+}
+
+.job-form .form-control {
+  border-radius: 0;
+}
+
+.job-form .btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.job-form .btn-primary:hover {
+  background-color: #2f3439;
+  border-color: #c1c8cf;
+}

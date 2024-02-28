@@ -1,0 +1,36 @@
+/* LogoRow.css */
+.logo-row-container {
+  overflow: hidden; /* Hide overflowing content */
+}
+
+.logo-row {
+  display: flex;
+  animation: moveLogos 20s linear infinite; /* Animation to move logos */
+}
+
+.logo-item {
+  margin-right: 20px; /* Add space between logo items */
+  opacity: 0; /* Initially hide all logos */
+  animation: fadeIn 1s ease-in-out infinite; /* Animation to fade in each logo */
+}
+
+@keyframes moveLogos {
+  0% {
+    transform: translateX(100%); /* Start from far right */
+  }
+  100% {
+    transform: translateX(-100%); /* Move to far left */
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0; /* Start with logo hidden */
+  }
+  50% {
+    opacity: 1; /* Fade in halfway through the animation */
+  }
+  100% {
+    opacity: 1; /* Keep logo visible until end of animation */
+  }
+}

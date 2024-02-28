@@ -1,0 +1,22 @@
+/* CompanyProfile.module.css */
+/* Header.module.css */
+
+.header {
+  background-image: url('');
+  background-size: cover;
+  background-position: center;
+  height: 200px; /* Adjust height as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+
+
+
+@media (max-width: 768px) {
+  .companyProfile {
+    width: 90%;
+  }
+}

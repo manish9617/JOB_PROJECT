@@ -1,0 +1,88 @@
+.main
+{
+  align-items: center;
+  padding: 50px;
+  margin: 15px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+.pro{
+  border: 1px solid #ccc;
+  padding: 16px;
+  max-width: 50%;
+  margin: 0 auto;
+  right: 50%;
+    border-radius: 15px;
+
+}
+
+.profile {
+  
+    display: flex;   
+   
+
+  }
+  .img
+  {
+    border-radius: 50%;
+    height: 50%;
+    width: 50%;
+    min-width: 100px;
+  }
+  .resume
+  {
+    border: none;
+    box-shadow:50px;
+    border-radius: 5px;
+    background-color: bisque;
+    font-size: x-large;
+    right: 50%;
+  }
+  .left
+  {
+    margin-right: 15px;
+  }
+ 
+  .line
+  {
+    width: 0.5px;
+    background-color: rgb(143, 132, 132);
+  }
+  .right
+  {
+    margin-left: 15px;
+  }
+  .rightUp
+  {
+    padding: 5px;
+    margin-block-start: 15px;
+  }
+  .Skillsitem
+  {
+    display: flex;
+    list-style: none;
+
+  }
+  .Items
+  {
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid black;
+    background-color: rgb(246, 236, 236);
+    border-radius: 10px;
+    font-size: larger;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .SecondPro
+  {
+    border: 1px solid #ccc;
+    padding: 16px;
+    max-width: 50%;
+    margin: 0 auto;  
+    right: 50%;
+    border-radius: 15px;
+  }
+  

@@ -1,0 +1,55 @@
+/* HrSidebar.module.css */
+
+.sidebar {
+  height: 100vh;
+  width: 250px;
+  left: 0;
+  background-color: #111;
+  padding-top: 20px;
+  transition: width 0.5s;
+}
+
+.sidebar.open {
+  width: 0;
+  overflow: hidden;
+}
+
+.sidebar-menu {
+  padding: 0;
+  margin-top: 10px;
+}
+
+.sidebar-menu li {
+  margin-bottom: 20px;
+  margin-left: 5px;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+.sidebar-toggle {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.5s;
+  }
+
+  .sidebar.open {
+    width: 250px;
+  }
+
+  .sidebar-toggle {
+    display: block;
+    position: absolute;
+    top: 80px;
+    left: 5px;
+    z-index: 999; /* Ensure it's above other content */
+    font-size: 24px;
+    color: red;
+    cursor: pointer;
+  }
+}

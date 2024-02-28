@@ -1,0 +1,21 @@
+.main{
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  /* justify-content: space-around; */
+  padding: 2px;
+  box-shadow: 0 0 10px rgba(236, 231, 231, 0.5);
+  background-color: white;
+  height: 70px;
+}
+body{
+  background:transparent;
+  background: rgb(243, 242, 239);
+}
+.vertical-line {
+  border-left: 1px solid rgb(230, 213, 213); /* Adjust color and thickness as needed */
+  /* Adjust height as needed */
+  margin: 0 10px; /* Centers the line */
+  margin-top: 7px;
+  height: 55px;
+}

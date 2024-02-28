@@ -1,0 +1,84 @@
+/* CompanyDetails.module.css */
+
+.companyDetails {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.companyDetails h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.detailItem {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.detailItem strong {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.container {
+  margin: 10px 50px;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  box-shadow: 50px;
+}
+
+.jobDetails {
+  width: 100%;
+  padding: 15px;
+  
+}
+.jobD{
+  display: flex;
+}
+.jobDescription {
+  width: 100%;
+  padding: 15px;
+}
+
+.Line {
+  background-color: black;
+  width: 1px;
+  display: none; /* Hide the line by default */
+}
+
+/* Media Queries */
+@media (min-width: 576px) {
+  .container {
+    width: 80%;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 70%;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 60%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 50%;
+  }
+  
+  .Line {
+    display: block; /* Show the line for screens larger than 1200px */
+  }
+}

@@ -43,11 +43,11 @@ const CompanyRegister = () => {
   };
 
   return (
-    <div className="p-10">
-      <div className="container d-flex justify-content-center align-items-center">
+    
+      <div className="container  justify-content-center align-items-center">
         <div
           className="card p-4"
-          style={{ width: "500px", background: "#333" }}
+          style={{ width: "575px", background: "#333" }}
         >
           <center>
             <h3 className="text-white mb-4">Registration Form</h3>
@@ -198,7 +198,6 @@ const CompanyRegister = () => {
           </p>
         </div>
       </div>
-    </div>
   );
 };
 

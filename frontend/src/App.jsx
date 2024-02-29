@@ -3,7 +3,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
-
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:3000";
 function App() {
   return (
     <>

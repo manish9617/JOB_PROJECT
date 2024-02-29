@@ -3,6 +3,8 @@ const mysql=require('mysql');
 const cors=require('cors');
 const app=express();
 const port=3000;
+const salt=10;
+const bcrypt=require('bcrypt')
 app.use(express.json());
 app.use(cors());
 
@@ -22,3 +24,5 @@ db.connect((err)=>{
 app.listen(port,()=>{
     console.log(`server is running on the port ${port}`);
 })
+
+

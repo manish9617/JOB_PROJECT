@@ -16,6 +16,7 @@ import Login from "./Components/LoginRegister/Login.jsx";
 import Register from "./Components/LoginRegister/Register.jsx";
 import Hr from "./Components/HrPanel/Hr.jsx";
 import Home from "./Components/HomePage/Home.jsx";
+import Profile from "./Components/UserPanel/Profile.jsx"
 const router = createBrowserRouter(
   createRoutesFromChildren(
     <Route path="/" element={<App />}>
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
       <Route path="companylogin" element={<CompanyLogin />} />
       <Route path="companyregister" element={<CompanyRegister />} />
       <Route path="/Hr" element={<Hr />} />
+      <Route path="/user" element={<Profile></Profile>}></Route>
     </Route>
   )
 );

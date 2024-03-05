@@ -9,7 +9,7 @@ const Slideshow = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % SlideData.length);
-    }, 3000); // Change slide every 3 seconds (3000 milliseconds)
+    }, 5000); // Change slide every 3 seconds (3000 milliseconds)
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
@@ -21,7 +21,7 @@ const Slideshow = () => {
   return (
     <div
       id="carouselExampleControls"
-      className="carousel slide"
+      className="carousel slide p-3 "
       data-bs-ride="carousel"
     >
       <div className="carousel-inner">

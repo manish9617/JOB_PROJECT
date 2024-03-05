@@ -1,28 +1,42 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import axios from "axios";
 const Register = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    contactNumber: "",
+    phone: "",
     email: "",
     password: "",
     dob: "",
     gender: "",
-    resume: null,
+    adhar: "",
+    experience: "",
   });
-
+  const [resume, setResume] = useState(null);
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Handle form submission logic here
-    // Save the user data to your database or state
-
-    // After saving data, navigate to the login page
-    navigate("/");
+    const formdata = new FormData();
+    formdata.append("firstName", formData.firstName);
+    formdata.append("lastName", formData.lastName);
+    formdata.append("phone", formData.phone);
+    formdata.append("email", formData.email);
+    formdata.append("password", formData.password);
+    formdata.append("dob", formData.dob);
+    formdata.append("gender", formData.gender);
+    formdata.append("adhar", formData.adhar);
+    formdata.append("resume", resume);
+    formdata.append("experience", formData.experience);
+    axios
+      .post("/postdata", formdata, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((res) => {
+        if (res.data.Status == "Success") navigate("/login");
+        else alert(res.data.Error);
+      });
   };
 
   const handleInputChange = (e) => {
@@ -34,11 +48,7 @@ const Register = () => {
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFormData((prevData) => ({
-      ...prevData,
-      resume: file,
-    }));
+    setResume(e.target.files[0]);
   };
 
   return (
@@ -81,17 +91,14 @@ const Register = () => {
 
           <div className="row mb-3">
             <div className="col">
-              <label
-                htmlFor="contactNumber"
-                className="form-label text-white"
-              >
+              <label htmlFor="phone" className="form-label text-white">
                 Contact Number
               </label>
               <input
                 type="number"
                 className="form-control"
-                id="contactNumber"
-                name="contactNumber"
+                id="phone"
+                name="phone"
                 placeholder="Contact Number"
                 required
                 onChange={handleInputChange}
@@ -157,6 +164,39 @@ const Register = () => {
 
           <div className="row mb-3">
             <div className="col">
+              <label htmlFor="adhar" className="form-label text-white">
+                Adhar Number
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                id="adhar"
+                name="adhar"
+                placeholder="Adhar Number"
+                required
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+          <div className="row mb-3">
+            <div className="col">
+              <label htmlFor="adhar" className="form-label text-white">
+                Experience
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                id="experience"
+                name="experience"
+                placeholder="How many years of experience have you had?"
+                required
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          <div className="row mb-3">
+            <div className="col">
               <label htmlFor="resume" className="form-label text-white">
                 Upload Resume
               </label>
@@ -189,10 +229,7 @@ const Register = () => {
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="btn btn-dark w-100 mb-2 bg-primary"
-          >
+          <button type="submit" className="btn btn-dark w-100 mb-2 bg-primary">
             REGISTER
           </button>
         </form>

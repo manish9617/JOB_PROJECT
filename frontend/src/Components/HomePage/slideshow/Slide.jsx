@@ -5,7 +5,7 @@ const Slide = ({ slide, isActive }) => {
   return (
     <div className={`carousel-item ${isActive ? "active" : ""}`}>
       <img
-        className="d-block w-100"
+        className="d-block w-100 rounded-4"
         style={{ height: "400px" }}
         src={slide.imageUrl}
         alt={`Slide ${slide.id}`}

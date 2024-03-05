@@ -2,24 +2,25 @@ import { FcGoogle } from "react-icons/fc";
 import { BsLinkedin } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import axios from "axios";
 export default function Login() {
   const email = useRef();
   const password = useRef();
-  const users = [
-    { id: "hr1@gmail.com", password: "123456" },
-    { id: "hr2@gmail.com", password: "123456" },
-  ];
   const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
   function handleForm(event) {
     event.preventDefault();
-    const e = email.current.value;
-    const p = password.current.value;
-    const user = users.find((u) => u.id === e && u.password === p);
-    if (user) {
-      navigate("/profile");
-    } else {
-      alert("Enter a valid email and password");
-    }
+    const formData = {
+      email: email.current.value,
+      password: password.current.value,
+    };
+    axios.post("/login-user", formData).then((res) => {
+      if (res.data.Status === "Success") {
+        localStorage.setItem("token", res.data.token);
+        navigate("/");
+      } else alert(res.data.Error);
+    });
+
     email.current.value = "";
     password.current.value = "";
   }

@@ -8,15 +8,14 @@ import { AllFunction } from "./Components/store/store";
 function Header() {
   const navRef = useRef();
   const { userAuth, hrAuth } = useContext(AllFunction);
-  const navigate = useNavigation();
   axios.defaults.withCredentials = true;
   const handleLogout = () => {
     axios
       .get("/logout")
       .then(() => {
         localStorage.clear();
-        // navigate("/");
-        location.reload(true);
+        // window.location.href = "/";
+        location.replace("/");
       })
       .catch((err) => console.log(err));
   };
@@ -28,18 +27,20 @@ function Header() {
   return (
     <header className="overflow-auto">
       <div className="">
-        <Link to="/">
+        <Link to={hrAuth ? "Hr" : "/"}>
           <h3>LOGO</h3>
         </Link>
       </div>
       <div className="flex justify-end">
         <nav ref={navRef}>
-          <Link
-            to="AllJobs"
-            className="bg-black text-white py-3 rounded-md text-xl font-bold px-8 mx-5"
-          >
-            Search Job
-          </Link>
+          {!hrAuth && (
+            <Link
+              to={hrAuth ? "Hr" : "AllJobs"}
+              className="bg-black text-white py-3 rounded-md text-xl font-bold px-8 mx-5"
+            >
+              Search Job
+            </Link>
+          )}
           <>
             {hrAuth || userAuth ? (
               <button

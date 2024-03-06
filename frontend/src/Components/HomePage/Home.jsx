@@ -10,9 +10,9 @@ function Home() {
     if (localStorage.getItem("token") != null) {
       axios.get("/").then((res) => {
         if (res.data.Status === "Success") {
-          handleAuth(true);
+          handleAuth(user, true);
         } else {
-          handleAuth(false);
+          handleAuth(user, false);
           alert(res.data.Error);
         }
       });

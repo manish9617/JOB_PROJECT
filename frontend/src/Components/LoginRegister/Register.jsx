@@ -30,7 +30,7 @@ const Register = () => {
     formdata.append("resume", resume);
     formdata.append("experience", formData.experience);
     axios
-      .post("/postdata", formdata, {
+      .post("/postdata-user", formdata, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {

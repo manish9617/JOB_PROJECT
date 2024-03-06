@@ -3,11 +3,11 @@ const mysql = require("mysql");
 const cors = require("cors");
 const app = express();
 const port = 3000;
-const salt = 10;
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const salt = 10;
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -35,46 +35,65 @@ app.listen(port, () => {
   console.log(`server is running on the port ${port}`);
 });
 
-app.post("/postdata", upload.single("resume"), (req, res) => {
+app.post("//postdata-user", upload.single("resume"), (req, res) => {
   // Generate salt for password hashing
-  const saltRounds = 10;
-  bcrypt.genSalt(saltRounds, (err, salt) => {
+
+  // Hash the password
+  bcrypt.hash(req.body.password.toString(), salt, (err, hash) => {
     if (err) {
-      console.error("Error generating salt:", err);
-      return res.status(500).json({ Error: "Internal server error" });
+      console.error("Error hashing password:", err);
+      return res.json({ Error: "Internal server error" });
     }
-
-    // Hash the password
-    bcrypt.hash(req.body.password.toString(), salt, (err, hash) => {
+    // Prepare SQL query
+    const sql =
+      "INSERT INTO JobSeeker (JsFName, JsLName, JsEmail, AdharId, DOB, Phone, Gen, Resume, JsExpYear, pwd) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const values = [
+      req.body.firstName,
+      req.body.lastName,
+      req.body.email,
+      req.body.adhar,
+      req.body.dob,
+      req.body.phone,
+      req.body.gender,
+      req.file.buffer, // Use req.file.buffer for file data
+      req.body.experience,
+      hash, // Storing hashed password in the database
+    ];
+    // Execute SQL query
+    db.query(sql, values, (err, result) => {
       if (err) {
-        console.error("Error hashing password:", err);
-        return res.status(500).json({ Error: "Internal server error" });
+        console.error("Error executing SQL query:", err);
+        return res.json({ Error: "Internal server error" });
       }
+      // console.log("New record inserted:", result);
+      res.json({ Status: "Success" });
+    });
+  });
+});
 
-      // Prepare SQL query
-      const sql =
-        "INSERT INTO JobSeeker (JsFName, JsLName, JsEmail, AdharId, DOB, Phone, Gen, Resume, JsExpYear, pwd) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-      const values = [
-        req.body.firstName,
-        req.body.lastName,
-        req.body.email,
-        req.body.adhar,
-        req.body.dob,
-        req.body.phone,
-        req.body.gender,
-        req.file.buffer, // Use req.file.buffer for file data
-        req.body.experience,
-        hash, // Storing hashed password in the database
-      ];
-      // Execute SQL query
-      db.query(sql, values, (err, result) => {
-        if (err) {
-          console.error("Error executing SQL query:", err);
-          return res.status(500).json({ Error: "Internal server error" });
-        }
-        // console.log("New record inserted:", result);
-        res.status(200).json({ Status: "Success" });
-      });
+app.post("/postdata-hr", upload.single("logo"), (req, res) => {
+  bcrypt.hash(req.body.password.toString(), salt, (err, hash) => {
+    if (err) return res.json({ Error: "Error in hash password in server" });
+    const adminId = Math.floor(Math.random() * 4) + 1;
+    const sql =
+      "INSERT INTO hr (HrName,HrEmail,HrPwd,AdharId,CompName,CompAdd, CompPhone,CompanyLogo,AdminId) values(?,?,?,?,?,?,?,?,?)";
+    const values = [
+      req.body.name,
+      req.body.email,
+      hash,
+      req.body.adhar,
+      req.body.CompName,
+      req.body.CompAdd,
+      req.body.CompPhone,
+      req.file.buffer,
+      adminId,
+    ];
+    db.query(sql, values, (err, response) => {
+      if (err) {
+        console.log(err);
+        return res.json({ Error: "Inserting error in server" });
+      }
+      return res.json({ Status: "Success" });
     });
   });
 });
@@ -106,6 +125,34 @@ app.post("/login-user", (req, res) => {
     }
   });
 });
+
+app.post("/login-hr", (req, res) => {
+  // console.log(req.body);
+  const sql = "SELECT * from hr where HrEmail=?";
+  db.query(sql, [req.body.email], (err, data) => {
+    if (err) return res.json({ Error: "Error in server " });
+    if (data.length > 0) {
+      bcrypt.compare(
+        req.body.password.toString(),
+        data[0].HrPwd,
+        (err, resposne) => {
+          if (err) return res.json({ Error: "Error in password compare" });
+          if (resposne) {
+            const id = data[0].HrId;
+            const token = jwt.sign({ id }, "key", { expiresIn: "1d" });
+            res.cookie("token", token);
+            return res.json({ Status: "Success", token });
+          } else {
+            return res.json({ Error: "wrong password" });
+          }
+        }
+      );
+    } else {
+      return res.json({ Error: "Email not exist" });
+    }
+  });
+});
+
 const varifyUser = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) return res.json({ Error: "You are not authenticated" });
@@ -119,6 +166,10 @@ const varifyUser = (req, res, next) => {
     });
   }
 };
+
+app.get("/hr-auth", varifyUser, (req, res) => {
+  return res.json({ Status: "Success" });
+});
 app.get("/", varifyUser, (req, res) => {
   return res.json({ Status: "Success", name: req.name });
 });

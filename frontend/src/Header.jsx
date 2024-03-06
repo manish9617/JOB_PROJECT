@@ -2,18 +2,20 @@ import { useContext, useRef } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./header.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 import { AllFunction } from "./Components/store/store";
 
 function Header() {
   const navRef = useRef();
-  const { userAuth } = useContext(AllFunction);
+  const { userAuth, hrAuth } = useContext(AllFunction);
+  const navigate = useNavigation();
   axios.defaults.withCredentials = true;
   const handleLogout = () => {
     axios
       .get("/logout")
       .then(() => {
         localStorage.clear();
+        // navigate("/");
         location.reload(true);
       })
       .catch((err) => console.log(err));
@@ -39,7 +41,7 @@ function Header() {
             Search Job
           </Link>
           <>
-            {userAuth ? (
+            {hrAuth || userAuth ? (
               <button
                 className="bg-black text-white px-6 py-3 rounded-md text-xl font-bold"
                 onClick={handleLogout}
@@ -55,7 +57,7 @@ function Header() {
             )}
           </>
           <>
-            {!userAuth && (
+            {!userAuth && !hrAuth && (
               <Link to="companylogin">
                 <button className="bg-white text-black px-6 py-3 rounded-md text-xl font-bold">
                   For Company

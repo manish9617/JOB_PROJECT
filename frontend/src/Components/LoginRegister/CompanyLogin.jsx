@@ -1,26 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
-
+import axios from "axios";
 export default function CompanyLogin() {
-  const users = [
-    { id: "hr1@gmail.com", password: "123456" },
-    { id: "hr2@gmail.com", password: "123456" },
-  ];
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.elements.email.value;
     const password = e.target.elements.password.value;
-    const user = users.find((u) => u.id === email && u.password === password);
-    if (user) {
-      // window.location.href = "/";
-      toggleHR(true);
-      console.log(hrLogin);
-      navigate("/");
-    } else {
-      alert("Wrong password or Email");
-    }
-
+    axios.post("/login-hr", { email, password }).then((res) => {
+      if (res.data.Status === "Success") {
+        localStorage.setItem("token", res.data.token);
+        navigate("/Hr");
+      } else {
+        alert(res.data.Error);
+      }
+    });
     e.target.elements.email.value = "";
     e.target.elements.password.value = "";
   };

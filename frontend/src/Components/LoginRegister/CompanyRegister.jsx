@@ -1,4 +1,5 @@
 // Register.jsx
+import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -6,23 +7,36 @@ const CompanyRegister = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    compName: "",
+    address: "",
     hrname: "",
-    contactNumber: "",
+    aadhar: "",
     email: "",
+    contact: "",
+    logo: "",
     password: "",
-    dob: "",
-    gender: "",
-    logo: null,
   });
-
+  const [logo, setLogo] = useState(null);
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Handle form submission logic here
-    // Save the user data to your database or state
-
-    // After saving data, navigate to the login page
-    navigate("/");
+    console.log(formData);
+    const data = new FormData();
+    data.append("name", formData.hrname);
+    data.append("email", formData.email);
+    data.append("password", formData.password);
+    data.append("adhar", formData.aadhar);
+    data.append("CompName", formData.compName);
+    data.append("CompAdd", formData.address);
+    data.append("CompPhone", formData.contact);
+    data.append("logo", logo);
+    axios
+      .post("/postdata-hr", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((res) => {
+        if (res.data.Status === "Success") navigate("/companylogin");
+        else alert(res.data.Error);
+      });
   };
 
   const handleInputChange = (e) => {
@@ -34,11 +48,7 @@ const CompanyRegister = () => {
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFormData((prevData) => ({
-      ...prevData,
-      resume: file,
-    }));
+    setLogo(e.target.files[0]);
   };
 
   return (
@@ -54,8 +64,8 @@ const CompanyRegister = () => {
               <input
                 type="text"
                 className="form-control"
-                id="companyName"
-                name="companyName"
+                id="compName"
+                name="compName"
                 placeholder="Company Name"
                 required
                 onChange={handleInputChange}
@@ -109,7 +119,7 @@ const CompanyRegister = () => {
               <input
                 type="number"
                 className="form-control"
-                id="number"
+                id="aadhar"
                 name="aadhar"
                 placeholder="Aadhar number"
                 required
@@ -138,8 +148,8 @@ const CompanyRegister = () => {
               <input
                 type="number"
                 className="form-control"
-                id="contactNumber"
-                name="contactNumber"
+                id="contact"
+                name="contact"
                 placeholder="Contact Number"
                 required
                 onChange={handleInputChange}
@@ -157,7 +167,7 @@ const CompanyRegister = () => {
                 id="logo"
                 name="logo"
                 placeholder="Upload Company logo"
-                accept=".pdf, .doc, .docx"
+                accept="image/*"
                 onChange={handleFileChange}
               />
             </div>

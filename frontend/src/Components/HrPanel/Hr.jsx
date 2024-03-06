@@ -29,13 +29,11 @@ export default function Hr() {
       <div style={{ flex: 1 }}>
         {/* Render the selected tab component */}
         {selectedTab === "jobs" && <HrJobs onSelectTab={handleTabSelect} />}
-        {selectedTab === "search" && (
-          <>
-            <SearchCandidate></SearchCandidate>
-          </>
-        )}
+        {selectedTab === "search" && <SearchCandidate></SearchCandidate>}
         {selectedTab === "setting" && <EditUserProfile></EditUserProfile>}
-        {selectedTab === "postJob" && <PostJob></PostJob>}
+        {selectedTab === "postJob" && (
+          <PostJob onSelectTab={handleTabSelect}></PostJob>
+        )}
       </div>
     </div>
   );

@@ -110,9 +110,8 @@ app.post("/login-user", (req, res) => {
           if (err)
             return res.json({ Error: "Password compare error in server" });
           if (response) {
-            const name = data[0].firstName + " " + data[0].lastName;
             const id = data[0].JsId;
-            const token = jwt.sign({ name, id }, "key", { expiresIn: "1d" });
+            const token = jwt.sign({ id }, "key", { expiresIn: "1d" });
             res.cookie("token", token);
             return res.json({ Status: "Success", token });
           } else {
@@ -160,18 +159,35 @@ const varifyUser = (req, res, next) => {
     jwt.verify(token, "key", (err, decoded) => {
       if (err) return res.json({ Error: "Token is not correct" });
       else {
-        req.name = decoded.name;
+        req.id = decoded.id;
         next();
       }
     });
   }
 };
-
 app.get("/hr-auth", varifyUser, (req, res) => {
   return res.json({ Status: "Success" });
 });
 app.get("/", varifyUser, (req, res) => {
   return res.json({ Status: "Success", name: req.name });
+});
+app.post("/job-post", varifyUser, (req, res) => {
+  const id = req.body.id;
+
+  const sql =
+    "INSERT INTO job (JobTitle, JobDescr,JobExperience,MiniEducat,City,Role,Salary,JobType,PostDate,Active,HrId) values(?,?,?,?,?,?,?,?,?,?,?)";
+  const values = [
+    req.body.jobTitle,
+    req.body.jobDescription,
+    req.body.experience,
+    req.body.minimumEducation,
+    req.body.city,
+    req.body.role,
+    req.body.salary,
+    req.body.jobType,
+    req.body.workLocation,
+  ];
+  return res.json({ Status: "Success" });
 });
 
 app.get("/logout", (req, res) => {

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./PostJob.css"; // Import custom CSS file
+import axios from "axios";
 
-const PostJob = ({ onSubmit }) => {
+const PostJob = ({ onSelectTab }) => {
   const [formData, setFormData] = useState({
     jobTitle: "",
     jobDescription: "",
@@ -11,16 +12,22 @@ const PostJob = ({ onSubmit }) => {
     role: "",
     salary: "",
     jobType: "",
+    workLocation: "", // Add new state for work location
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+  axios.defaults.withCredentials = true;
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    axios.post("/job-post", formData).then((res) => {
+      if (res.data.Status === "Success") {
+        console.log("done");
+        location.href = "/Hr";
+      }
+    });
   };
 
   return (
@@ -29,6 +36,8 @@ const PostJob = ({ onSubmit }) => {
         <div className="col-lg-8 w-full">
           <form onSubmit={handleSubmit} className="job-form">
             <div className="form-row" style={{ marginLeft: "100px" }}>
+              {/* Existing input fields */}
+              {/* Job Title */}
               <div className="form-group col-md-10">
                 <label>Job Title:</label>
                 <input
@@ -39,6 +48,7 @@ const PostJob = ({ onSubmit }) => {
                   onChange={handleChange}
                 />
               </div>
+              {/* Experience */}
               <div className="form-group col-md-10">
                 <label>Experience:</label>
                 <input
@@ -49,6 +59,7 @@ const PostJob = ({ onSubmit }) => {
                   onChange={handleChange}
                 />
               </div>
+              {/* City */}
               <div className="form-group col-md-10">
                 <label>City:</label>
                 <input
@@ -59,6 +70,7 @@ const PostJob = ({ onSubmit }) => {
                   onChange={handleChange}
                 />
               </div>
+              {/* Salary */}
               <div className="form-group col-md-10">
                 <label>Salary:</label>
                 <input
@@ -69,6 +81,7 @@ const PostJob = ({ onSubmit }) => {
                   onChange={handleChange}
                 />
               </div>
+              {/* Job Description */}
               <div className="form-group col-md-10">
                 <label>Job Description:</label>
                 <textarea
@@ -78,6 +91,7 @@ const PostJob = ({ onSubmit }) => {
                   onChange={handleChange}
                 ></textarea>
               </div>
+              {/* Minimum Education */}
               <div className="form-group col-md-10">
                 <label>Minimum Education:</label>
                 <input
@@ -88,6 +102,7 @@ const PostJob = ({ onSubmit }) => {
                   onChange={handleChange}
                 />
               </div>
+              {/* Role */}
               <div className="form-group col-md-10">
                 <label>Role:</label>
                 <input
@@ -98,15 +113,35 @@ const PostJob = ({ onSubmit }) => {
                   onChange={handleChange}
                 />
               </div>
+              {/* Job Type */}
               <div className="form-group col-md-10">
                 <label>Job Type:</label>
-                <input
-                  type="text"
+                <select
                   name="jobType"
                   className="form-control"
                   value={formData.jobType}
                   onChange={handleChange}
-                />
+                >
+                  <option value="">Select Job Type</option>
+                  <option value="Part Time">Part Time</option>
+                  <option value="Full Time">Full Time</option>
+                  <option value="both">Both</option>
+                </select>
+              </div>
+              {/* Work Location */}
+              <div className="form-group col-md-10">
+                <label>Work Location:</label>
+                <select
+                  name="workLocation"
+                  className="form-control"
+                  value={formData.workLocation}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Job Location</option>
+                  <option value="wfh">Work from home</option>
+                  <option value="office">Office work</option>
+                  <option value="hybrid">Hybrid</option>
+                </select>
               </div>
             </div>
             <div className="row">

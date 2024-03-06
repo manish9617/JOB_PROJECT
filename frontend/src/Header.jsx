@@ -35,14 +35,14 @@ function Header() {
         <nav ref={navRef}>
           {!hrAuth && (
             <Link
-              to={hrAuth ? "Hr" : "AllJobs"}
+              to={!userAuth ? "login" : "AllJobs"}
               className="bg-black text-white py-3 rounded-md text-xl font-bold px-8 mx-5"
             >
               Search Job
             </Link>
           )}
           <>
-            {hrAuth || userAuth ? (
+            {userAuth || hrAuth ? (
               <button
                 className="bg-black text-white px-6 py-3 rounded-md text-xl font-bold"
                 onClick={handleLogout}

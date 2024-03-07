@@ -12,7 +12,8 @@ const PostJob = ({ onSelectTab }) => {
     role: "",
     salary: "",
     jobType: "",
-    workLocation: "", // Add new state for work location
+    workLocation: "",
+    lastDate: "", // Add new state for work location
   });
 
   const handleChange = (e) => {
@@ -143,10 +144,21 @@ const PostJob = ({ onSelectTab }) => {
                   <option value="hybrid">Hybrid</option>
                 </select>
               </div>
+              <div className="form-group col-md-10">
+                <label>Last Date:</label>
+                <input
+                  type="date"
+                  name="lastDate"
+                  className="form-control"
+                  value={formData.lastDate}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
+
             <div className="row">
-              <div className="col-md-12 text-center mt-3">
-                <button type="submit" className="btn btn-primary">
+              <div className="col-md-12 text-center mt-4">
+                <button type="submit" className="btn btn-primary w-[30%]">
                   Submit
                 </button>
               </div>

@@ -20,37 +20,46 @@ export default function Edit({ type, values, editDetails }) {
   };
 
   return (
-    <div className={`edit p-1 ${editField === type ? "input-focused" : ""}`}>
-      <label>{type} : </label>
-      <input
-        type="text"
-        className={` h-8 mt-2 me-4${
-          editField === type ? " border border-primary rounded-xl" : ""
-        }`}
-        name={type}
-        defaultValue={values}
-        ref={value}
-        disabled={editField !== type}
-        onFocus={handleFocus}
-      />
-      {editField !== type && (
-        <button className="" onClick={() => handleEdit(type)}>
-          Edit
-        </button>
-      )}
-      {editField === type && (
-        <>
-          <button className="btn btn-primary mt-2 me-2 h-8" onClick={saveData}>
-            Save
+    <tr className={`edit p-1 ${editField === type ? "input-focused" : ""}`}>
+      <td className="w-[20%]">
+        <label>{type} : </label>
+      </td>
+      <td className="w-[50%]">
+        <input
+          type="text"
+          className={` h-8 mt-2 me-4 w-[100%] ps-1${
+            editField === type ? " border border-primary rounded-xl" : ""
+          }`}
+          name={type}
+          defaultValue={values}
+          ref={value}
+          disabled={editField !== type}
+          onFocus={handleFocus}
+        />
+      </td>
+      <td className="w-[25%]">
+        {editField !== type && (
+          <button className="ms-5" onClick={() => handleEdit(type)}>
+            Edit
           </button>
-          <button
-            className="btn btn-danger mt-2 h-8"
-            onClick={() => setEditField("")}
-          >
-            Cancel
-          </button>
-        </>
-      )}
-    </div>
+        )}
+        {editField === type && (
+          <>
+            <button
+              className="btn btn-primary mt-2 me-2 h-8"
+              onClick={saveData}
+            >
+              Save
+            </button>
+            <button
+              className="btn btn-danger mt-2 h-8"
+              onClick={() => setEditField("")}
+            >
+              Cancel
+            </button>
+          </>
+        )}
+      </td>
+    </tr>
   );
 }

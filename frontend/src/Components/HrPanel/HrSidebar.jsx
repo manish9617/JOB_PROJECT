@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+
 import styles from "./HrSidebar.module.css"; // Import CSS module for styling
 
 const HrSidebar = ({ onSelectTab }) => {
@@ -30,7 +30,7 @@ const HrSidebar = ({ onSelectTab }) => {
       <ul className={styles["sidebar-menu"]}>
         <li onClick={() => handleTabClick("jobs")}>Jobs</li>
         <li onClick={() => handleTabClick("search")}>Search Candidate</li>
-        <li onClick={() => handleTabClick("setting")}>Edit profile</li>
+        <li onClick={() => handleTabClick("setting")}>profile</li>
       </ul>
     </div>
   );

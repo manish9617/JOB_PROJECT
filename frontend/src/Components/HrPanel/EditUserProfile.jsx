@@ -36,27 +36,54 @@ export default function EditUserProfile() {
   return (
     <div className="container mt-5">
       <div className="row p-3">
-        <Edit type="Name" values={name} editDetails={editDetails} />
+        <table>
+          <tbody>
+            <Edit type="Name" values={name} editDetails={editDetails} />
+
+            <Edit type="Email" values={email} editDetails={editDetails} />
+
+            <Edit type="Address" values={address} editDetails={editDetails} />
+
+            <Edit type="Phone" values={phone} editDetails={editDetails} />
+
+            <Edit type="Company" values={company} editDetails={editDetails} />
+          </tbody>
+        </table>
         <center>
-          <hr style={{ width: "550px" }} />
-        </center>
-        <Edit type="Email" values={email} editDetails={editDetails} />
-        <center>
-          <hr style={{ width: "550px" }} />
-        </center>
-        <Edit type="Address" values={address} editDetails={editDetails} />
-        <center>
-          <hr style={{ width: "550px" }} />
-        </center>
-        <Edit type="Phone" values={phone} editDetails={editDetails} />
-        <center>
-          <hr style={{ width: "550px" }} />
-        </center>
-        <Edit type="Company" values={company} editDetails={editDetails} />
-        <center>
-          <hr style={{ width: "550px" }} />
+          <button className="btn btn-primary mt-5 w-[80%]">
+            Update profile
+          </button>
         </center>
       </div>
     </div>
+    // <div className="container mt-5">
+    //   <div className="row p-3">
+    //     <Edit type="Name" values={name} editDetails={editDetails} />
+    //     <center>
+    //       <hr style={{ width: "550px" }} />
+    //     </center>
+    //     <Edit type="Email" values={email} editDetails={editDetails} />
+    //     <center>
+    //       <hr style={{ width: "550px" }} />
+    //     </center>
+    //     <Edit type="Address" values={address} editDetails={editDetails} />
+    //     <center>
+    //       <hr style={{ width: "550px" }} />
+    //     </center>
+    //     <Edit type="Phone" values={phone} editDetails={editDetails} />
+    //     <center>
+    //       <hr style={{ width: "550px" }} />
+    //     </center>
+    //     <Edit type="Company" values={company} editDetails={editDetails} />
+    //     <center>
+    //       <hr style={{ width: "550px" }} />
+    //     </center>
+    //     <center>
+    //       <button className="btn btn-primary mt-5 w-[80%]">
+    //         Update profile
+    //       </button>
+    //     </center>
+    //   </div>
+    // </div>
   );
 }

@@ -175,7 +175,7 @@ app.post("/job-post", varifyUser, (req, res) => {
   const id = req.id;
   const date = new Date().toISOString().split("T")[0];
   const sql =
-    "INSERT INTO job (JobTitle, JobDescr,JobExperience,MiniEducat,City,Role,Salary,JobType,PostDate,Active,HrId,workLocation) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+    "INSERT INTO job (JobTitle, JobDescr,JobExperience,MiniEducat,City,Role,Salary,JobType,PostDate,Active,HrId,workLocation,lastDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
   const values = [
     req.body.jobTitle,
     req.body.jobDescription,
@@ -189,6 +189,7 @@ app.post("/job-post", varifyUser, (req, res) => {
     true,
     id,
     req.body.workLocation,
+    req.body.lastDate,
   ];
   console.log(id);
   db.query(sql, values, (err, result) => {
@@ -197,6 +198,15 @@ app.post("/job-post", varifyUser, (req, res) => {
   });
 });
 
+app.get("/hr-total-post-job", varifyUser, (req, res) => {
+  const id = req.id;
+  const sql =
+    "select j.* ,COUNT(ja.JobId) as application from job j left join jobapplication ja on j.JobId=ja.JobId where j.HrID= ? group by j.JobId";
+  db.query(sql, [id], (err, data) => {
+    if (err) console.log(err);
+    return res.json({ Status: "Success", jobs: data });
+  });
+});
 app.get("/logout", (req, res) => {
   res.clearCookie("token");
   return res.json({ Status: "Success" });

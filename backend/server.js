@@ -211,3 +211,24 @@ app.get("/logout", (req, res) => {
   res.clearCookie("token");
   return res.json({ Status: "Success" });
 });
+
+app.post("/update-hr-profile", varifyUser, (req, res) => {
+  const id = req.id;
+  const sql =
+    "update hr set HrName=? ,HrEmail=?,CompADD=?,CompPhone=?,CompName=? where HrID=?";
+  db.query(
+    sql,
+    [
+      req.body.name,
+      req.body.email,
+      req.body.address,
+      req.body.phone,
+      req.body.company,
+      id,
+    ],
+    (err, response) => {
+      if (err) throw err;
+      return res.json({ Status: "Success", response });
+    }
+  );
+});

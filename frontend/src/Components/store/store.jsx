@@ -19,7 +19,7 @@ const FunctionProvider = ({ children }) => {
     CompWeb: null,
   });
   const handleHrData = (data) => {
-    setHrData(...data);
+    setHrData(data);
   };
   const handleAuth = (type, temp) => {
     if (type === "user") setUserAuth(temp);

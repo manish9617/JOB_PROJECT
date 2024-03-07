@@ -137,10 +137,10 @@ app.post("/login-hr", (req, res) => {
         (err, resposne) => {
           if (err) return res.json({ Error: "Error in password compare" });
           if (resposne) {
-            const id = data[0].HrId;
-            const token = jwt.sign({ id }, "key", { expiresIn: "1d" });
+            const id = data[0].HrID;
+            const token = jwt.sign({ id: id }, "key", { expiresIn: "1d" });
             res.cookie("token", token);
-            return res.json({ Status: "Success", token });
+            return res.json({ Status: "Success", token, info: data });
           } else {
             return res.json({ Error: "wrong password" });
           }
@@ -172,10 +172,10 @@ app.get("/", varifyUser, (req, res) => {
   return res.json({ Status: "Success", name: req.name });
 });
 app.post("/job-post", varifyUser, (req, res) => {
-  const id = req.body.id;
-
+  const id = req.id;
+  const date = new Date().toISOString().split("T")[0];
   const sql =
-    "INSERT INTO job (JobTitle, JobDescr,JobExperience,MiniEducat,City,Role,Salary,JobType,PostDate,Active,HrId) values(?,?,?,?,?,?,?,?,?,?,?)";
+    "INSERT INTO job (JobTitle, JobDescr,JobExperience,MiniEducat,City,Role,Salary,JobType,PostDate,Active,HrId,workLocation) values(?,?,?,?,?,?,?,?,?,?,?,?)";
   const values = [
     req.body.jobTitle,
     req.body.jobDescription,
@@ -185,9 +185,16 @@ app.post("/job-post", varifyUser, (req, res) => {
     req.body.role,
     req.body.salary,
     req.body.jobType,
+    date,
+    true,
+    id,
     req.body.workLocation,
   ];
-  return res.json({ Status: "Success" });
+  console.log(id);
+  db.query(sql, values, (err, result) => {
+    if (err) return res.json({ Error: "Error in inserting data" });
+    return res.json({ Status: "Success" });
+  });
 });
 
 app.get("/logout", (req, res) => {

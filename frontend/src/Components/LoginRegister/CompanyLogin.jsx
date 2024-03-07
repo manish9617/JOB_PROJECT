@@ -1,15 +1,24 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useContext } from "react";
+import { AllFunction } from "../store/store";
 export default function CompanyLogin() {
   const navigate = useNavigate();
-
+  const { handleHrData } = useContext(AllFunction);
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.elements.email.value;
     const password = e.target.elements.password.value;
     axios.post("/login-hr", { email, password }).then((res) => {
       if (res.data.Status === "Success") {
+        const userInfo = res.data.info.map((obj) => {
+          const { HrID, HrPwd, companyLogo, AdharId, ...rest } = obj;
+          return rest;
+        });
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("info", JSON.stringify(userInfo));
+        handleHrData(JSON.parse(localStorage.getItem("info")));
+        console.log(localStorage.getItem("info"));
         navigate("/Hr");
       } else {
         alert(res.data.Error);
@@ -43,7 +52,7 @@ export default function CompanyLogin() {
                 name="password"
               />
               <small>
-                <Link to="/" className="text-decoration-none d-block pt-2">
+                <Link to="#" className="text-decoration-none d-block pt-2">
                   Forgot password?
                 </Link>
               </small>

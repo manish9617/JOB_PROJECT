@@ -1,0 +1,10 @@
+.Main {
+  height: 100vh;
+}
+@media (max-width: 600px) {
+  .Main {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+}

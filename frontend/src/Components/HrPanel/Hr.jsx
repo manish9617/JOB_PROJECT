@@ -23,6 +23,7 @@ export default function Hr() {
       });
     }
   });
+
   return (
     <div style={{ display: "flex" }}>
       <HrSidebar onSelectTab={handleTabSelect} />

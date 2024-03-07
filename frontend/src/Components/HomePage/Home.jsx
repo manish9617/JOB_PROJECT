@@ -2,7 +2,9 @@ import React, { useEffect, useContext } from "react";
 import Slideshow from "./slideshow/Slideshow";
 import { AllFunction } from "../store/store";
 import axios from "axios";
-
+import Search from "./Search";
+import HomePart from "./HomePart";
+import style from "./Home.module.css";
 // import LogoRow from "./CompanyLogo/LogoRow";
 function Home() {
   axios.defaults.withCredentials = true;
@@ -22,6 +24,14 @@ function Home() {
   return (
     <>
       <Slideshow></Slideshow>
+      <div className={style.main}>
+        <center>
+          <Search></Search>
+        </center>
+        <div className="flex w-[95%] overflow-auto">
+          <HomePart></HomePart>
+        </div>
+      </div>
     </>
   );
 }

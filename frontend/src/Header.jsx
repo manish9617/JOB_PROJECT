@@ -25,17 +25,25 @@ function Header() {
   };
 
   return (
-    <header className="overflow-auto">
-      <div className="">
+    <header>
+      <div>
         <Link to={hrAuth ? "Hr" : "/"}>
-          <h3>LOGO</h3>
+          <div className="  mx-auto flex justify-center items-center bottom-0">
+            <h3>
+              <img
+                src="/public/Mainicon.png"
+                className=" h-[200px] w-[250px] left-0"
+                alt="Main Icon"
+              />
+            </h3>
+          </div>
         </Link>
       </div>
       <div className="flex justify-end">
         <nav ref={navRef}>
           {!hrAuth && (
             <Link
-              to={!userAuth ? "login" : "AllJobs"}
+              to="AllJobs"
               className="bg-black text-white py-3 rounded-md text-xl font-bold px-8 mx-5"
             >
               Search Job
@@ -52,7 +60,7 @@ function Header() {
             ) : (
               <Link to="login">
                 <button className="bg-black text-white px-6 py-3 rounded-md text-xl font-bold">
-                  For Candidate
+                  Candidate Login
                 </button>
               </Link>
             )}
@@ -61,7 +69,7 @@ function Header() {
             {!userAuth && !hrAuth && (
               <Link to="companylogin">
                 <button className="bg-white text-black px-6 py-3 rounded-md text-xl font-bold">
-                  For Company
+                  Company Login
                 </button>
               </Link>
             )}

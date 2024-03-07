@@ -21,7 +21,7 @@ export default function Edit({ type, values, editDetails }) {
 
   return (
     <div className={`edit p-1 ${editField === type ? "input-focused" : ""}`}>
-      <label>{type}</label>
+      <label>{type} : </label>
       <input
         type="text"
         className={` h-8 mt-2 me-4${

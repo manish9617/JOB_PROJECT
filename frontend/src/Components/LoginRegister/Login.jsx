@@ -17,6 +17,7 @@ export default function Login() {
     axios.post("/login-user", formData).then((res) => {
       if (res.data.Status === "Success") {
         localStorage.setItem("token", res.data.token);
+
         navigate("/");
       } else alert(res.data.Error);
     });

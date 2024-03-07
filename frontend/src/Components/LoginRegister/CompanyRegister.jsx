@@ -193,7 +193,7 @@ const CompanyRegister = () => {
 
         <p className="mt-2 text-white">
           Already have an account?
-          <Link to="/login" className="text-decoration-none text-white">
+          <Link to="/companylogin" className="text-decoration-none text-white">
             {" "}
             Login
           </Link>

@@ -1,12 +1,23 @@
+import { AllFunction } from "../store/store";
 import Edit from "./Edit";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 export default function EditUserProfile() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
-  const [company, setCompany] = useState("");
+  const { hrData, handleHrData } = useContext(AllFunction);
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("info") != null) {
+  //     const storedData = JSON.parse(localStorage.getItem("info"));
+  //     handleHrData(storedData);
+  //     console.log(storedData);
+  //   }
+  // }, []);
+
+  const [name, setName] = useState(hrData.HrName);
+  const [email, setEmail] = useState(hrData.HrEmail);
+  const [address, setAddress] = useState(hrData.CompADD);
+  const [phone, setPhone] = useState(hrData.CompPhone);
+  const [company, setCompany] = useState(hrData.CompName);
 
   const editDetails = (type, value) => {
     if (type === "Name") {

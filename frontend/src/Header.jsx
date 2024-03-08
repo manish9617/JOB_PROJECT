@@ -31,7 +31,7 @@ function Header() {
           <div className="  mx-auto flex justify-center items-center bottom-0">
             <h3>
               <img
-                src="/public/Mainicon.png"
+                src="/Mainicon.png"
                 className=" h-[200px] w-[250px] left-0"
                 alt="Main Icon"
               />

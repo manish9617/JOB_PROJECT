@@ -1,18 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./PostedJobs.css";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { AllFunction } from "../store/store";
+
 export default function PostedJobs({ job }) {
-  // console.log(job);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  const openPopup = () => {
-    setIsPopupOpen(true);
-  };
-
-  const closePopup = () => {
-    setIsPopupOpen(false);
-  };
   const [formData, setFormData] = useState({
     JobId: job.JobId,
     JobTitle: job.JobTitle,
@@ -24,25 +17,39 @@ export default function PostedJobs({ job }) {
     Salary: job.Salary,
     JobType: job.JobType,
     workLocation: job.workLocation,
-    lastDate: job.lastDate, // Add new state for work location
+    lastDate: job.lastDate,
   });
+  const { hrPostjobData, handleHrData } = useContext(AllFunction);
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post("/updateJob", formData).then((res) => {
       if (res.data.Status === "Success") {
+        const data = hrPostjobData.filter(
+          (job) => job.JobId !== formData.JobId
+        );
+        data = [...data, ...formData];
+        handleHrData(data);
         toast.success("Updated successfully");
       } else {
         toast.error(res.data.Error);
       }
     });
-
     setIsPopupOpen(false);
   };
+
   return (
     <div className="main mt-4">
       <div className="w-[20%]">
@@ -62,7 +69,7 @@ export default function PostedJobs({ job }) {
       <div className="vertical-line"></div>
       <div className="w-[12%]">
         <h1 className="p-1 text-xm font-bold">Last Date</h1>
-        <h1 className="p-1">{new Date(job.lastDate).toLocaleDateString()}</h1>
+        <h1 className="p-1">{new Date(job.LastDate).toLocaleDateString()}</h1>
       </div>
       <div className="vertical-line"></div>
       <div className="w-[10%]">
@@ -83,88 +90,79 @@ export default function PostedJobs({ job }) {
               <div className="col-lg-8 w-full">
                 <form className="jobform" onSubmit={handleSubmit}>
                   <div className="form-row" style={{ marginLeft: "100px" }}>
-                    {/* Existing input fields */}
-                    {/* Job Title */}
                     <div className="form-group col-md-10">
                       <label>Job Title:</label>
                       <input
                         type="text"
-                        name="jobTitle"
+                        name="JobTitle"
                         className="form-control"
                         value={formData.JobTitle}
                         onChange={handleChange}
                       />
                     </div>
-                    {/* Experience */}
                     <div className="form-group col-md-10">
                       <label>Experience:</label>
                       <input
                         type="text"
-                        name="experience"
+                        name="JobExperience"
                         className="form-control"
                         value={formData.JobExperience}
                         onChange={handleChange}
                       />
                     </div>
-                    {/* City */}
                     <div className="form-group col-md-10">
                       <label>City:</label>
                       <input
                         type="text"
-                        name="city"
+                        name="City"
                         className="form-control"
                         value={formData.City}
                         onChange={handleChange}
                       />
                     </div>
-                    {/* Salary */}
                     <div className="form-group col-md-10">
                       <label>Salary:</label>
                       <input
                         type="text"
-                        name="salary"
+                        name="Salary"
                         className="form-control"
                         value={formData.Salary}
                         onChange={handleChange}
                       />
                     </div>
-                    {/* Job Description */}
                     <div className="form-group col-md-10">
                       <label>Job Description:</label>
                       <textarea
-                        name="jobDescription"
+                        name="JobDescr"
                         className="form-control"
                         value={formData.JobDescr}
                         onChange={handleChange}
                       ></textarea>
                     </div>
-                    {/* Minimum Education */}
                     <div className="form-group col-md-10">
                       <label>Minimum Education:</label>
                       <input
                         type="text"
-                        name="minimumEducation"
+                        name="MiniEducat"
                         className="form-control"
                         value={formData.MiniEducat}
                         onChange={handleChange}
                       />
                     </div>
-                    {/* Role */}
                     <div className="form-group col-md-10">
                       <label>Role:</label>
                       <input
                         type="text"
-                        name="role"
+                        name="Role"
                         className="form-control"
                         value={formData.Role}
                         onChange={handleChange}
                       />
                     </div>
-                    {/* Job Type */}
                     <div className="form-group col-md-10">
                       <label>Job Type:</label>
                       <select
-                        name="jobType"
+                        name="JobType"
                         className="form-control"
                         value={formData.JobType}
                         onChange={handleChange}
@@ -175,7 +173,6 @@ export default function PostedJobs({ job }) {
                         <option value="both">Both</option>
                       </select>
                     </div>
-                    {/* Work Location */}
                     <div className="form-group col-md-10">
                       <label>Work Location:</label>
                       <select
@@ -201,7 +198,6 @@ export default function PostedJobs({ job }) {
                       />
                     </div>
                   </div>
-
                   <div className="row">
                     <div className="col-md-12 text-center mt-4">
                       <button type="submit" className="btn btn-primary w-[30%]">

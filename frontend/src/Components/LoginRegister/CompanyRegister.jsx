@@ -14,6 +14,7 @@ const CompanyRegister = () => {
     email: "",
     contact: "",
     logo: "",
+    web: "",
     password: "",
   });
   const [logo, setLogo] = useState(null);
@@ -28,6 +29,7 @@ const CompanyRegister = () => {
     data.append("CompName", formData.compName);
     data.append("CompAdd", formData.address);
     data.append("CompPhone", formData.contact);
+    data.append("web", formData.web);
     data.append("logo", logo);
     axios
       .post("/postdata-hr", data, {
@@ -99,18 +101,6 @@ const CompanyRegister = () => {
                 onChange={handleInputChange}
               />
             </div>
-            {/* <div className="col">
-                <label className="form-label text-white">Last Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="lastName"
-                  name="lastName"
-                  placeholder="Last Name"
-                  required
-                  onChange={handleInputChange}
-                />
-              </div> */}
           </div>
 
           <div className="row mb-3">
@@ -151,6 +141,20 @@ const CompanyRegister = () => {
                 id="contact"
                 name="contact"
                 placeholder="Contact Number"
+                required
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+          <div className="row mb-3">
+            <div className="col">
+              <label className="form-label text-white">Company website</label>
+              <input
+                type="text"
+                className="form-control"
+                id="web"
+                name="web"
+                placeholder="Enter Company website"
                 required
                 onChange={handleInputChange}
               />

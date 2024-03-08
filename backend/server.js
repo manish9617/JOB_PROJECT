@@ -232,3 +232,8 @@ app.post("/update-hr-profile", varifyUser, (req, res) => {
     }
   );
 });
+
+app.post("/updateJob", varifyUser, (req, res) => {
+  console.log(req.id);
+  return res.json({ Status: "Success" });
+});

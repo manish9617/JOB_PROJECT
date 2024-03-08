@@ -4,11 +4,11 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 export default function EditUserProfile() {
   const { hrData } = useContext(AllFunction);
-  const [name, setName] = useState(hrData.HrName);
-  const [email, setEmail] = useState(hrData.HrEmail);
-  const [address, setAddress] = useState(hrData.CompADD);
-  const [phone, setPhone] = useState(hrData.CompPhone);
-  const [company, setCompany] = useState(hrData.CompName);
+  const [name, setName] = useState(hrData[0].HrName);
+  const [email, setEmail] = useState(hrData[0].HrEmail);
+  const [address, setAddress] = useState(hrData[0].CompADD);
+  const [phone, setPhone] = useState(hrData[0].CompPhone);
+  const [company, setCompany] = useState(hrData[0].CompName);
 
   const editDetails = (type, value) => {
     if (type === "Name") {

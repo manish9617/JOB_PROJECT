@@ -14,9 +14,8 @@ export default function HrJobs({ onSelectTab }) {
     if (localStorage.getItem("info") != null && hrData.HrName === "") {
       const storedData = JSON.parse(localStorage.getItem("info"));
       handleHrData(storedData);
-      console.log(storedData);
     }
-  });
+  }, []);
   const [total, setTotal] = useState(
     hrPostjobData === null ? 0 : hrPostjobData.length
   );

@@ -6,6 +6,7 @@ import SearchCandidate from "./SearchCandidate";
 import EditUserProfile from "./EditUserProfile";
 import { AllFunction } from "../store/store";
 import axios from "axios";
+
 export default function Hr() {
   const [selectedTab, setSelectedTab] = useState("jobs");
   const handleTabSelect = (tabName) => {

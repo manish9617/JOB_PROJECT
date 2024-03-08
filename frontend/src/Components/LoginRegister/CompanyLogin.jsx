@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AllFunction } from "../store/store";
 export default function CompanyLogin() {
   const navigate = useNavigate();
-  const { handleHrData } = useContext(AllFunction);
+  const { hrData, handleHrData } = useContext(AllFunction);
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.elements.email.value;
@@ -18,7 +18,8 @@ export default function CompanyLogin() {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("info", JSON.stringify(userInfo));
         handleHrData(JSON.parse(localStorage.getItem("info")));
-        console.log(localStorage.getItem("info"));
+        console.log("local data", JSON.parse(localStorage.getItem("info")));
+        // console.log("hrData", hrData);
         navigate("/Hr");
       } else {
         alert(res.data.Error);

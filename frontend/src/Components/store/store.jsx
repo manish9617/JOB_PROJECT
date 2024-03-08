@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const AllFunction = createContext({
   handleAuth: () => {},
@@ -18,6 +18,7 @@ const FunctionProvider = ({ children }) => {
     AdminId: "",
     CompWeb: null,
   });
+
   const handleHrData = (data) => {
     setHrData(data);
   };

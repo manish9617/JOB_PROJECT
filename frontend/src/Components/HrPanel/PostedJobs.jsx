@@ -37,11 +37,14 @@ export default function PostedJobs({ job }) {
     e.preventDefault();
     axios.post("/updateJob", formData).then((res) => {
       if (res.data.Status === "Success") {
-        const data = hrPostjobData.filter(
-          (job) => job.JobId !== formData.JobId
-        );
-        data = [...data, ...formData];
-        handleHrData(data);
+        const updatedData = hrPostjobData.map((job) => {
+          if (job.JobId === formData.JobId) {
+            return formData;
+          } else {
+            return job;
+          }
+        });
+        handleHrData(updatedData);
         toast.success("Updated successfully");
       } else {
         toast.error(res.data.Error);

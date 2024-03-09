@@ -15,7 +15,7 @@ export default function Hr() {
   const { handleAuth } = useContext(AllFunction);
   useEffect(() => {
     if (localStorage.getItem("token") != null) {
-      axios.get("/hr-auth").then((res) => {
+      axios.get("/").then((res) => {
         if (res.data.Status === "Success") {
           handleAuth("hr", true);
         } else {

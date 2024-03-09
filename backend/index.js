@@ -119,7 +119,9 @@ app.post("/login-user", (req, res) => {
             return res.json({ Error: "Password compare error in server" });
           if (response) {
             const id = data[0].JsId;
-            const token = jwt.sign({ id }, "key", { expiresIn: "1d" });
+            const token = jwt.sign({ id, type: "user" }, "key", {
+              expiresIn: "1d",
+            });
             res.cookie("token", token);
             return res.json({ Status: "Success", token });
           } else {
@@ -146,7 +148,9 @@ app.post("/login-hr", (req, res) => {
           if (err) return res.json({ Error: "Error in password compare" });
           if (resposne) {
             const id = data[0].HrID;
-            const token = jwt.sign({ id: id }, "key", { expiresIn: "1d" });
+            const token = jwt.sign({ id, type: "hr" }, "key", {
+              expiresIn: "1d",
+            });
             res.cookie("token", token);
             return res.json({ Status: "Success", token, info: data });
           } else {
@@ -168,18 +172,19 @@ const varifyUser = (req, res, next) => {
       if (err) return res.json({ Error: "Token is not correct" });
       else {
         req.id = decoded.id;
+        req.a = decoded.type;
         next();
       }
     });
   }
 };
 
-app.get("/hr-auth", varifyUser, (req, res) => {
-  return res.json({ Status: "Success" });
-});
+// app.get("/hr-auth", varifyUser, (req, res) => {
+//   return res.json({ Status: "Success" });
+// });
 
 app.get("/", varifyUser, (req, res) => {
-  return res.json({ Status: "Success", name: req.name });
+  return res.json({ Status: "Success", type: req.a });
 });
 
 app.post("/job-post", varifyUser, (req, res) => {

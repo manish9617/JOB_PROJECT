@@ -13,11 +13,10 @@ function Home() {
     if (localStorage.getItem("token") != null) {
       axios.get("/").then((res) => {
         if (res.data.Status === "Success") {
-          handleAuth("user", true);
-        } else {
-          handleAuth("user", false);
-          alert(res.data.Error);
+          if (res.data.type === "user") handleAuth("user", true);
+          else if (res.data.type === "hr") handleAuth("hr", true);
         }
+        console.log(res.data);
       });
     }
   });

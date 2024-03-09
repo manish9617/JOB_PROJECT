@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./header.css";
 import axios from "axios";
-import { Link, useNavigate, useNavigation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AllFunction } from "./Components/store/store";
 
 function Header() {
@@ -23,11 +23,10 @@ function Header() {
   const showNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
   };
-
   return (
     <header>
       <div>
-        <Link to={hrAuth ? "Hr" : "/"}>
+        <Link to={hrAuth ? "/hr" : "/"}>
           <div className="  mx-auto flex justify-center items-center bottom-0">
             <h3>
               <img

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import "./PostedJobs.css";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { AllFunction } from "../store/store";
@@ -66,7 +67,9 @@ export default function PostedJobs({ job }) {
       </div>
       <div className="vertical-line"></div>
       <div className="w-[12%]">
-        <h1 className="p-1 text-xm font-bold">All Candidate</h1>
+        <Link to="/">
+          <h1 className="p-1 text-xm font-bold">All Candidate</h1>
+        </Link>
         <h1 className="p-1">{job.application}</h1>
       </div>
       <div className="vertical-line"></div>

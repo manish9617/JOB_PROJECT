@@ -6,6 +6,7 @@ import Search from "./Search";
 import HomePart from "./HomePart";
 import style from "./Home.module.css";
 // import LogoRow from "./CompanyLogo/LogoRow";
+
 function Home() {
   axios.defaults.withCredentials = true;
   const { handleAuth } = useContext(AllFunction);
@@ -14,7 +15,10 @@ function Home() {
       axios.get("/").then((res) => {
         if (res.data.Status === "Success") {
           if (res.data.type === "user") handleAuth("user", true);
-          else if (res.data.type === "hr") handleAuth("hr", true);
+          else if (res.data.type === "hr") {
+            handleAuth("hr", true);
+            window.location.href = "/hr";
+          }
         }
         console.log(res.data);
       });

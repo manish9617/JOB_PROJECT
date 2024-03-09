@@ -179,10 +179,6 @@ const varifyUser = (req, res, next) => {
   }
 };
 
-// app.get("/hr-auth", varifyUser, (req, res) => {
-//   return res.json({ Status: "Success" });
-// });
-
 app.get("/", varifyUser, (req, res) => {
   return res.json({ Status: "Success", type: req.a });
 });

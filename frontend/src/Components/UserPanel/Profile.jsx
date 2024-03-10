@@ -9,11 +9,11 @@ function Profile() {
   };
   return (
     <>
-      <div className="flex">
+      <div style={{ display: "flex" }}>
         <div>
           <UserSideBar onSelectedTab={onSelectedTab}></UserSideBar>
         </div>
-        <div className="absolute mx-[20%] w-[70%] overflow-auto h-[80%]">
+        <div style={{ flex: 1 }}>
           <UserDetils tab={selectedTab}></UserDetils>
         </div>
       </div>

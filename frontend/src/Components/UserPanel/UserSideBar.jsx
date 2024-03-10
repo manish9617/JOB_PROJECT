@@ -1,10 +1,5 @@
-import React, { useState, useEffect } from "react";
-import styles from "./UserSidebar.module.css"; // Import CSS module for styling
-import Skills from "./Skills";
-import Education from "./UserEducation";
-import Experience from "./Experience";
-
-const HrSidebar = ({ onSelectedTab }) => {
+import styles from "./UserSidebar.module.css";
+const UserSideBar = ({ onSelectedTab }) => {
   return (
     <div className={`${styles.sidebar} `}>
       <div className={styles["sidebar-toggle"]}></div>
@@ -35,11 +30,11 @@ const HrSidebar = ({ onSelectedTab }) => {
             onSelectedTab("experience");
           }}
         >
-          Educations details
+          Experience details
         </li>
       </ul>
     </div>
   );
 };
 
-export default HrSidebar;
+export default UserSideBar;

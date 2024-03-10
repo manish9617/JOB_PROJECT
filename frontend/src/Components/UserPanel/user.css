@@ -1,0 +1,18 @@
+.education {
+  margin-top: 4%;
+  margin-left: 7%;
+  margin-right: 7%;
+  margin-bottom: 5%;
+}
+.education h1 {
+  font-size: x-large;
+  font-weight: 800;
+}
+.first {
+  display: flex;
+  justify-content: space-between;
+}
+.userdiv {
+  height: 100vh;
+  overflow-y: scroll;
+}

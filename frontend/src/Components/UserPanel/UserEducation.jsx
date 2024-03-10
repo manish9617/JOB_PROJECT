@@ -1,15 +1,20 @@
 import React from "react";
 import Education from "./Education";
-
+import "./user.css";
 function UserEducation() {
   return (
-    <div>
-      <h3 className="font-bold text-xl">Education</h3>
-      <hr />
+    <div className="education">
+      <div className="first">
+        <h1>Eduaction Details</h1>
+        <button className="btn btn-primary">Add Education</button>
+      </div>
       <Education></Education>
-      <hr />
       <Education></Education>
-      <hr />
+      <Education></Education>
+      <Education></Education>
+      <Education></Education>
+      <Education></Education>
+      <Education></Education>
       <Education></Education>
     </div>
   );

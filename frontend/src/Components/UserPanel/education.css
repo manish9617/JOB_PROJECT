@@ -1,0 +1,10 @@
+.education1 {
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(236, 231, 231, 0.5);
+  background-color: white;
+  padding: 10px 10px 10px 30px;
+  border-radius: 10px;
+}
+.education1 p {
+  padding: 2px 0px 2px 0px;
+}

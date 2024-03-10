@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { AllFunction } from "../store/store";
 
-export default function PostedJobs({ job }) {
+export default function PostedJobs({ job, onSelectTab, handleJobId }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [formData, setFormData] = useState({
     JobId: job.JobId,
@@ -53,7 +53,6 @@ export default function PostedJobs({ job }) {
     });
     setIsPopupOpen(false);
   };
-
   return (
     <div className="main mt-4">
       <div className="w-[20%]">
@@ -67,9 +66,14 @@ export default function PostedJobs({ job }) {
       </div>
       <div className="vertical-line"></div>
       <div className="w-[12%]">
-        <Link to="/">
+        <button
+          onClick={() => {
+            onSelectTab("allApplicant");
+            handleJobId(job.JobId);
+          }}
+        >
           <h1 className="p-1 text-xm font-bold">All Candidate</h1>
-        </Link>
+        </button>
         <h1 className="p-1">{job.application}</h1>
       </div>
       <div className="vertical-line"></div>

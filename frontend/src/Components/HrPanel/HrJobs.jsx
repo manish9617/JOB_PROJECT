@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { AllFunction } from "../store/store";
 import axios from "axios";
 import Jobs from "./Jobs";
-export default function HrJobs({ onSelectTab }) {
+export default function HrJobs({ onSelectTab, handleJobId }) {
   const { hrData, handleHrData, hrPostjobData, handleHrPostJobData } =
     useContext(AllFunction);
   // onClickHandler should be a function that returns a function
@@ -20,18 +20,25 @@ export default function HrJobs({ onSelectTab }) {
     hrPostjobData === null ? 0 : hrPostjobData.length
   );
   useEffect(() => {
-    if (localStorage.getItem("token") != null && hrPostjobData === null) {
-      axios.get("/hr-total-post-job").then((res) => {
-        handleHrPostJobData(res.data.jobs);
-        setTotal(res.data.jobs.length);
-      });
-    }
+    const fetchData = async () => {
+      if (localStorage.getItem("token") != null && hrPostjobData === null) {
+        try {
+          const res = await axios.get("/hr-total-post-job");
+          handleHrPostJobData(res.data.jobs);
+          setTotal(res.data.jobs.length);
+        } catch (error) {
+          console.error("Error fetching HR total post job data:", error);
+        }
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
     <div className="ms-5 me-5 p-5">
       <div className="flex justify-content-between   font-bold text-xl ">
-        <p style={{ height: "40px" }}> All Jobs ({total})</p>
+        <p style={{ height: "40px" }}> All Posted Jobs ({total})</p>
         <button
           style={{
             background: "rgb(31, 130, 104)",
@@ -45,7 +52,7 @@ export default function HrJobs({ onSelectTab }) {
           Post a new job
         </button>
       </div>
-      <Jobs></Jobs>
+      <Jobs onSelectTab={onSelectTab} handleJobId={handleJobId} />
     </div>
   );
 }

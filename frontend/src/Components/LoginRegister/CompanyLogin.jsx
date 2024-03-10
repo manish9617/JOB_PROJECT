@@ -18,7 +18,7 @@ export default function CompanyLogin() {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("info", JSON.stringify(userInfo));
         handleHrData(JSON.parse(localStorage.getItem("info")));
-        console.log("local data", JSON.parse(localStorage.getItem("info")));
+        // console.log("local data", JSON.parse(localStorage.getItem("info")));
         // console.log("hrData", hrData);
         navigate("/Hr");
       } else {

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./PostJob.css"; // Import custom CSS file
 import axios from "axios";
+import { AllFunction } from "../store/store";
 
-const PostJob = ({ onSelectTab }) => {
+const PostJob = () => {
   const [formData, setFormData] = useState({
     jobTitle: "",
     jobDescription: "",
@@ -15,7 +16,7 @@ const PostJob = ({ onSelectTab }) => {
     workLocation: "",
     lastDate: "", // Add new state for work location
   });
-
+  const { addHrPostJob } = useContext(AllFunction);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -25,7 +26,7 @@ const PostJob = ({ onSelectTab }) => {
     e.preventDefault();
     axios.post("/job-post", formData).then((res) => {
       if (res.data.Status === "Success") {
-        console.log("done");
+        addHrPostJob(formData);
         location.href = "/Hr";
       }
     });

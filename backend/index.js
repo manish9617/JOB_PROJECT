@@ -187,7 +187,7 @@ app.post("/job-post", varifyUser, (req, res) => {
   const id = req.id;
   const date = new Date().toISOString().split("T")[0];
   const sql =
-    "INSERT INTO job (JobTitle, JobDescr,JobExperience,MiniEducat,City,Role,Salary,JobType,PostDate,HrId,workLocation,lastDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    "INSERT INTO job (JobTitle, JobDescr,JobExperience,MiniEducat,City,Role,Salary,JobType,PostDate,HrId,workLocation,lastDate) values(?,?,?,?,?,?,?,?,?,?,?,?)";
   const values = [
     req.body.jobTitle,
     req.body.jobDescription,
@@ -198,14 +198,15 @@ app.post("/job-post", varifyUser, (req, res) => {
     req.body.salary,
     req.body.jobType,
     date,
-    true,
     id,
     req.body.workLocation,
     req.body.lastDate,
   ];
-  console.log(id);
   db.query(sql, values, (err, result) => {
-    if (err) return res.json({ Error: "Error in inserting data" });
+    if (err) {
+      console.log(err);
+      return res.json({ Error: "Error in inserting data" });
+    }
     return res.json({ Status: "Success" });
   });
 });
@@ -269,5 +270,15 @@ app.post("/updateJob", varifyUser, (req, res) => {
   db.query(sql, values, (err, result) => {
     if (err) return res.json({ Error: "not updated job" });
     return res.json({ Status: "Success" });
+  });
+});
+
+app.get("/AllApplicant/:id", (req, res) => {
+  const { id } = req.params;
+  const sql =
+    "select jobseeker.* from jobseeker join jobapplication on jobseeker.JsId=jobapplication.JsId where jobapplication.JobId=?";
+  db.query(sql, [id], (err, result) => {
+    if (err) throw err;
+    res.json({ Status: "Success", applicant: result });
   });
 });

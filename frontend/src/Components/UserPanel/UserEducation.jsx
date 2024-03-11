@@ -10,12 +10,6 @@ function UserEducation() {
       </div>
       <Education></Education>
       <Education></Education>
-      <Education></Education>
-      <Education></Education>
-      <Education></Education>
-      <Education></Education>
-      <Education></Education>
-      <Education></Education>
     </div>
   );
 }

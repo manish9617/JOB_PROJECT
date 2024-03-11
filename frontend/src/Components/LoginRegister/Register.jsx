@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AllFunction } from "../store/store";
 const Register = () => {
   const navigate = useNavigate();
-
+  const { insertId, handleInsertId } = useContext(AllFunction);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -16,7 +17,7 @@ const Register = () => {
     experience: "",
   });
   const [resume, setResume] = useState(null);
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formdata = new FormData();
     formdata.append("firstName", formData.firstName);
@@ -29,13 +30,17 @@ const Register = () => {
     formdata.append("adhar", formData.adhar);
     formdata.append("resume", resume);
     formdata.append("experience", formData.experience);
-    axios
+    await axios
       .post("/postdata-user", formdata, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
-        if (res.data.Status == "Success") navigate("/login");
-        else alert(res.data.Error);
+        if (res.data.Status == "Success") {
+          // console.log(res.data.id);
+          handleInsertId(res.data.id);
+          // console.log(insertId);
+          navigate("/education");
+        } else alert(res.data.Error);
       });
   };
 

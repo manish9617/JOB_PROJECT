@@ -10,10 +10,22 @@ function Education() {
           <FaRegEdit />
         </button>
       </div>
-      <p>Institute Name</p>
-      <p>Start Date to End date</p>
-      <p>Certificate</p>
-      <p>Percentage</p>
+      <div className="row">
+        <div className="col-3">Institute Name</div>
+        <div className="col-8">DAVV</div>
+      </div>
+      <div className="row">
+        <div className="col-3">Start date to End Date</div>
+        <div className="col-8">11/01/2022 to 11/03/2022</div>
+      </div>
+      <div className="row">
+        <div className="col-3">Percentage</div>
+        <div className="col-8">82%</div>
+      </div>
+      <div className="row">
+        <div className="col-3">Certificate</div>
+        <div className="col-8">View</div>
+      </div>
     </div>
   );
 }

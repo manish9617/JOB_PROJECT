@@ -10,9 +10,6 @@ function UserExperience() {
       </div>
       <Experience></Experience>
       <Experience></Experience>
-      <Experience></Experience>
-      <Experience></Experience>
-      <Experience></Experience>
     </div>
   );
 }

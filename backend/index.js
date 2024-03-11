@@ -66,8 +66,9 @@ app.post("/postdata-user", upload.single("resume"), (req, res) => {
         console.error("Error executing SQL query:", err);
         return res.json({ Error: "Internal server error" });
       }
+      // console.log(result.insertId);
       // console.log("New record inserted:", result);
-      res.json({ Status: "Success" });
+      res.json({ Status: "Success", id: result.insertId });
     });
   });
 });
@@ -280,5 +281,46 @@ app.get("/AllApplicant/:id", (req, res) => {
   db.query(sql, [id], (err, result) => {
     if (err) throw err;
     res.json({ Status: "Success", applicant: result });
+  });
+});
+
+app.post(
+  "/postdata-education-user",
+  upload.single("DegreeFile"),
+  (req, res) => {
+    console.log(req.body.JsId);
+    const sql =
+      "insert into education (JsId,DegreeName, InstituteName,StartDate,CompletionDate,DegreeFile,Percentage) values (?,?,?,?,?,?,?)";
+    const values = [
+      req.body.JsId,
+      req.body.DegreeName,
+      req.body.InstituteName,
+      req.body.StartDate,
+      req.body.CompletionDate,
+      req.file.buffer,
+      req.body.Percentage,
+    ];
+    console.log(values);
+    db.query(sql, values, (err, result) => {
+      if (err) throw err;
+      return res.json({ Status: "Success" });
+    });
+  }
+);
+
+app.post("/postdata-experience-user", (req, res) => {
+  const sql =
+    "insert into experience (JsId, StartDate,EndDate,JobTitle,CompanyName,Description) values (?,?,?,?,?,?)";
+  const values = [
+    req.body.JsId,
+    req.body.startDate,
+    req.body.endDate,
+    req.body.jobTitle,
+    req.body.companyName,
+    req.body.description,
+  ];
+  db.query(sql, values, (err, result) => {
+    if (err) throw err;
+    return res.json({ Status: "Success" });
   });
 });

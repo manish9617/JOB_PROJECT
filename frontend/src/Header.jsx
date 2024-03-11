@@ -48,6 +48,13 @@ function Header() {
               Search Job
             </Link>
           )}
+          {userAuth && (
+            <Link to="/user">
+              <button className="bg-black text-white px-6 py-3 rounded-md text-xl font-bold">
+                Profile
+              </button>
+            </Link>
+          )}
           <>
             {userAuth || hrAuth ? (
               <button

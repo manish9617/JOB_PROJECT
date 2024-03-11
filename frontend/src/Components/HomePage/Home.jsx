@@ -20,10 +20,10 @@ function Home() {
             window.location.href = "/hr";
           }
         }
-        console.log(res.data);
       });
     }
   });
+
   return (
     <>
       <Slideshow></Slideshow>

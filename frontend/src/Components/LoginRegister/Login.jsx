@@ -16,8 +16,9 @@ export default function Login() {
     };
     axios.post("/login-user", formData).then((res) => {
       if (res.data.Status === "Success") {
+        const { JsId, pwd, AdharId, ...rest } = res.data.info;
+        localStorage.setItem("info", JSON.stringify(rest));
         localStorage.setItem("token", res.data.token);
-
         navigate("/");
       } else alert(res.data.Error);
     });

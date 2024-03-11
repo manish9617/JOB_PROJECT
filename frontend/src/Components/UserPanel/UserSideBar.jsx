@@ -11,13 +11,13 @@ const UserSideBar = ({ onSelectedTab }) => {
         >
           Profile
         </li>
-        <li
+        {/* <li
           onClick={() => {
             onSelectedTab("skills");
           }}
         >
           Skills
-        </li>
+        </li> */}
         <li
           onClick={() => {
             onSelectedTab("education");

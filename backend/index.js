@@ -124,7 +124,7 @@ app.post("/login-user", (req, res) => {
               expiresIn: "1d",
             });
             res.cookie("token", token);
-            return res.json({ Status: "Success", token });
+            return res.json({ Status: "Success", token, info: data[0] });
           } else {
             return res.json({ Error: "Password not correct" });
           }
@@ -322,5 +322,22 @@ app.post("/postdata-experience-user", (req, res) => {
   db.query(sql, values, (err, result) => {
     if (err) throw err;
     return res.json({ Status: "Success" });
+  });
+});
+
+app.get("/educationDetails", varifyUser, (req, res) => {
+  const id = req.id;
+  const sql = "select * from education where JsId=?";
+  db.query(sql, [id], (err, result) => {
+    if (err) throw err;
+    res.json({ Status: "Success", educa: result });
+  });
+});
+app.get("/experienceDetails", varifyUser, (req, res) => {
+  const id = req.id;
+  const sql = "select * from experience where JsId=?";
+  db.query(sql, [id], (err, result) => {
+    if (err) throw err;
+    res.json({ Status: "Success", exp: result });
   });
 });

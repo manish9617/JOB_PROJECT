@@ -5,7 +5,7 @@ function Education() {
   return (
     <div className="education1">
       <div className="d-flex justify-content-between pe-3">
-        <h className="fs-5  fw-bold">Post Graduation</h>
+        <h1 className="fs-5  fw-bold">Post Graduation</h1>
         <button>
           <FaRegEdit />
         </button>

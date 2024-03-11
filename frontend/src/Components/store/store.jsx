@@ -5,6 +5,7 @@ export const AllFunction = createContext({
   handleHrData: () => {},
   handleHrPostJobData: () => {},
   handleInsertId: () => {},
+  handleUserdata: () => {},
 });
 const FunctionProvider = ({ children }) => {
   const [userAuth, setUserAuth] = useState(false);
@@ -19,6 +20,10 @@ const FunctionProvider = ({ children }) => {
     AdminId: "",
     CompWeb: null,
   });
+  const [userData, setUserData] = useState(null);
+  const handleUserdata = (data) => {
+    setUserData(data);
+  };
   const [insertId, setInsertId] = useState(0);
   const handleHrData = (data) => {
     setHrData(data);
@@ -50,6 +55,8 @@ const FunctionProvider = ({ children }) => {
         hrPostjobData,
         insertId,
         handleInsertId,
+        handleUserdata,
+        userData,
       }}
     >
       {children}

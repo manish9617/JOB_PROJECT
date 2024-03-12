@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Education from "./Education";
 import "./user.css";
 import axios from "axios";
-function UserEducation() {
+function UserEducation({ onSelectedTab }) {
   const [data, setData] = useState(null);
   axios.defaults.withCredentials = true;
   useEffect(() => {
@@ -14,17 +14,33 @@ function UserEducation() {
       });
     }
   }, []);
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
   return (
     <div className="education">
       <div className="first">
         <h1>Eduaction Details</h1>
-        <button className="btn btn-primary">Add Education</button>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            console.log("Clicked Add Education button");
+            onSelectedTab("addEducation");
+          }}
+        >
+          Add Education
+        </button>
       </div>
-      <Education></Education>
-      <Education></Education>
+      {data === null ? (
+        <center>Data is loading</center>
+      ) : (
+        <>
+          {data.length === 0 ? (
+            <center>Nothing</center>
+          ) : (
+            data.map((educa, index) => (
+              <Education key={index} education={educa}></Education>
+            ))
+          )}
+        </>
+      )}
     </div>
   );
 }

@@ -22,7 +22,10 @@ function Profile() {
           <UserSideBar onSelectedTab={onSelectedTab}></UserSideBar>
         </div>
         <div style={{ flex: 1 }} className="userdiv">
-          <UserDetils tab={selectedTab}></UserDetils>
+          <UserDetils
+            tab={selectedTab}
+            onSelectedTab={onSelectedTab}
+          ></UserDetils>
         </div>
       </div>
     </>

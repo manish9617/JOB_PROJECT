@@ -19,8 +19,9 @@ function AddExperience({ onSelectedTab }) {
     e.preventDefault();
 
     axios.post("/postdata-experience-user", formData).then((res) => {
-      if (res.data.Status == "Success") navigate("/login");
-      else alert(res.data.Error);
+      if (res.data.Status == "Success") {
+        onSelectedTab("experience");
+      } else alert(res.data.Error);
     });
   };
 
@@ -141,7 +142,7 @@ function AddExperience({ onSelectedTab }) {
               type="submit"
               className="btn btn-dark w-100 mb-2 me-2 bg-primary"
             >
-              REGISTER
+              Add
             </button>
             <button
               type="cancel"

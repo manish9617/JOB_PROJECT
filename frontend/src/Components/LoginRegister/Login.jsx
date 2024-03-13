@@ -1,12 +1,14 @@
 import { FcGoogle } from "react-icons/fc";
 import { BsLinkedin } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import axios from "axios";
+import { AllFunction } from "../store/store";
 export default function Login() {
   const email = useRef();
   const password = useRef();
   const navigate = useNavigate();
+  const { handleUserdata } = useContext(AllFunction);
   axios.defaults.withCredentials = true;
   function handleForm(event) {
     event.preventDefault();
@@ -16,8 +18,9 @@ export default function Login() {
     };
     axios.post("/login-user", formData).then((res) => {
       if (res.data.Status === "Success") {
-        const { JsId, pwd, AdharId, ...rest } = res.data.info;
+        const { JsId, pwd, AdharId, Gen, ...rest } = res.data.info;
         localStorage.setItem("info", JSON.stringify(rest));
+        handleUserdata(rest);
         localStorage.setItem("token", res.data.token);
         navigate("/");
       } else alert(res.data.Error);

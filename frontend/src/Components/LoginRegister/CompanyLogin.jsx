@@ -11,12 +11,9 @@ export default function CompanyLogin() {
     const password = e.target.elements.password.value;
     axios.post("/login-hr", { email, password }).then((res) => {
       if (res.data.Status === "Success") {
-        const userInfo = res.data.info.map((obj) => {
-          const { HrID, HrPwd, companyLogo, AdharId, ...rest } = obj;
-          return rest;
-        });
+        const { HrID, HrPwd, companyLogo, AdharId, ...rest } = res.data.info;
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("info", JSON.stringify(userInfo));
+        localStorage.setItem("info", JSON.stringify(rest));
         handleHrData(JSON.parse(localStorage.getItem("info")));
         // console.log("local data", JSON.parse(localStorage.getItem("info")));
         // console.log("hrData", hrData);
@@ -28,6 +25,7 @@ export default function CompanyLogin() {
     e.target.elements.email.value = "";
     e.target.elements.password.value = "";
   };
+
   return (
     <div
       className="d-flex justify-content-center align-items-center"

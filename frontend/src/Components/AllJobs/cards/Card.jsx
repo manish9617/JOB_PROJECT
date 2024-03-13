@@ -1,22 +1,22 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import style from "./Card.module.css";
 import { AiFillAmazonSquare } from "react-icons/ai";
 import { MdHomeFilled } from "react-icons/md";
 import { FaWallet } from "react-icons/fa";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
+import { AllFunction } from "../../store/store";
 export default function Card({ obj }) {
-  const companyName = obj.companyName;
-  const jobRole = obj.jobRole;
-  const jobType = obj.jobType;
-  const jobTIme = obj.jobTime;
-  const textRequire = obj.textRequire;
-  //console.log(obj.minSalary, obj.maxSalary);
-  const minimum = obj.minSalary;
-  const maximum = obj.maxSalary;
-  // const [urgently, setUrgently] = useState(true);
-  // const [fastHrReply, setFastHr] = useState(true);
-  const [wfh, setWFH] = useState(true);
+  const { jobId, handleApplyJob } = useContext(AllFunction);
+  const companyName = obj.CompName;
+  const jobRole = obj.JobTitle;
+  const jobType = obj.workLocation;
+  const jobTIme = obj.JobType;
+  const minimum = obj.Salary;
+  const handleApply = async () => {
+    handleApplyJob(obj.JobId);
+    window.location.href = "/AllJobs/apply";
+  };
   return (
     <div className={style.card}>
       <div className={`d-flex justify-content-between ${style.header}`}>
@@ -31,26 +31,22 @@ export default function Card({ obj }) {
           </div>
         </div>
         <div>
-          <Link to="apply">
-            <button className={style.closeButton}>
-              <SlArrowRight />
-            </button>
-          </Link>
+          <button className={style.closeButton} onClick={handleApply}>
+            <SlArrowRight />
+          </button>
         </div>
       </div>
       <div className="d-flex align-items-center mt-2 ms-1">
-        {wfh ? <MdHomeFilled size={20} /> : <IoIosBusiness size={20} />}
+        <MdHomeFilled size={20} />
         <p className="ps-2 mb-0 fs-6">{jobType}</p>
       </div>
       <div className="d-flex align-items-center ms-1">
         <FaWallet className="me-2 mt-1" />
-        <p className="mb-0 mt-1">
-          ₹{minimum}- ₹{maximum}
-        </p>
+        <p className="mb-0 mt-1">₹{minimum}</p>
       </div>
       <div className={style.time}>
         <p className="me-2 ms-1">{jobTIme}</p>
-        <p className="ms-2">{textRequire}</p>
+        <p className="ms-2">Test required</p>
       </div>
       <div className={style.extra}>
         <p className="me-1">Urgently hiring</p>

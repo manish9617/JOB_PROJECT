@@ -2,41 +2,52 @@
   background-color: rgb(248, 252, 248);
   width: 350px;
   margin-left: 20px;
-  border: 1px solid black;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 2);
   border-radius: 10px;
   padding: 15px;
   margin-top: 30px;
 }
-
+.card:hover {
+  background-color: rgb(248, 252, 248);
+  width: 350px;
+  margin-left: 20px;
+  box-shadow: 0px 4px 6px rgba(170, 129, 206, 2);
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 30px;
+}
+.card:active {
+  background-color: #f0ecf3; /* Adjust this color to your preference */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Adjust shadow on click */
+}
 .header {
   flex-grow: 1;
 }
 .closeButton {
-  right: 10;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
 }
-.company h{
+.company h {
   font-weight: 500;
 }
-.company p{
+.company p {
   font-weight: 15;
   margin-top: -8px;
 }
 
-.time{
+.time {
   padding-top: 10px;
   display: flex;
 }
-.time p{
+.time p {
   padding: 2px 5px;
   background-color: rgb(230, 230, 230);
   border-radius: 3px;
 }
 
-.extra{
+.extra {
   padding: 2px 5px;
   margin-top: 3px;
   display: flex;

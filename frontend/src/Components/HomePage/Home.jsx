@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import Slideshow from "./slideshow/Slideshow";
+
 import { AllFunction } from "../store/store";
 import axios from "axios";
 import Search from "./Search";
@@ -25,12 +26,19 @@ function Home() {
   });
   return (
     <>
+      <br />
       <Slideshow></Slideshow>
-      <div className={style.main}>
-        <center>
+      <div className={style.Main}>
+        {/**JOB LINES COMPONENTS */}
+        <div className="flex  flex-col lg:flex-row ">
           <Search></Search>
-        </center>
-        <div className="flex w-[95%] overflow-auto">
+          <div className="pt-5">
+            <h1 className={style.H1}>Here You Can </h1>
+            <h2 className={style.H2}>Find The Job</h2>
+          </div>
+        </div>
+
+        <div className="flex w-[95%] ml-[5%] overflow-auto ">
           <HomePart></HomePart>
         </div>
       </div>

@@ -4,11 +4,11 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 export default function EditUserProfile() {
   const { hrData } = useContext(AllFunction);
-  const [name, setName] = useState(hrData[0].HrName);
-  const [email, setEmail] = useState(hrData[0].HrEmail);
-  const [address, setAddress] = useState(hrData[0].CompADD);
-  const [phone, setPhone] = useState(hrData[0].CompPhone);
-  const [company, setCompany] = useState(hrData[0].CompName);
+  const [name, setName] = useState(hrData.HrName);
+  const [email, setEmail] = useState(hrData.HrEmail);
+  const [address, setAddress] = useState(hrData.CompADD);
+  const [phone, setPhone] = useState(hrData.CompPhone);
+  const [company, setCompany] = useState(hrData.CompName);
 
   const editDetails = (type, value) => {
     if (type === "Name") {
@@ -32,9 +32,6 @@ export default function EditUserProfile() {
           let prevData = JSON.parse(localStorage.getItem("info"));
 
           // Check if prevData is an array, if so, take the first element
-          if (Array.isArray(prevData)) {
-            prevData = prevData[0];
-          }
 
           prevData.HrName = name;
           prevData.HrEmail = email;

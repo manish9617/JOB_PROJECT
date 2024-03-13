@@ -87,7 +87,7 @@ app.post("/postdata-hr", upload.single("logo"), (req, res) => {
 
     const adminId = Math.floor(Math.random() * 5) + 1;
     const sql =
-      "INSERT INTO hr (HrName, HrEmail, HrPwd, AdharId, CompName, CompAdd, CompPhone, CompWeb, CompanyLogo, AdminId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO hr (HrName, HrEmail, HrPwd, AdharId, CompName, CompAdd, CompPhone, CompWeb, CompanyLogo, AdminId,isVerify) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
     const values = [
       req.body.name,
       req.body.email,
@@ -99,6 +99,7 @@ app.post("/postdata-hr", upload.single("logo"), (req, res) => {
       req.body.web,
       req.file.buffer,
       adminId,
+      0,
     ];
 
     db.query(sql, values, (error, response) => {
@@ -157,7 +158,7 @@ app.post("/login-hr", (req, res) => {
               expiresIn: "1d",
             });
             res.cookie("token", token);
-            return res.json({ Status: "Success", token, info: data });
+            return res.json({ Status: "Success", token, info: data[0] });
           } else {
             return res.json({ Error: "wrong password" });
           }
@@ -186,6 +187,15 @@ const varifyUser = (req, res, next) => {
 
 app.get("/", varifyUser, (req, res) => {
   return res.json({ Status: "Success", type: req.a });
+});
+
+app.get("/get-userdata", varifyUser, (req, res) => {
+  const id = req.id;
+  const sql = "select * from jobseeker where JsId=?";
+  db.query(sql, [id], (err, result) => {
+    if (err) throw err;
+    return res.json({ Status: "Success", info: result[0] });
+  });
 });
 
 app.post("/job-post", varifyUser, (req, res) => {
@@ -306,7 +316,6 @@ app.post(
       req.file.buffer,
       req.body.Percentage,
     ];
-    console.log(values);
     db.query(sql, values, (err, result) => {
       if (err) throw err;
       return res.json({ Status: "Success" });
@@ -332,19 +341,140 @@ app.post("/postdata-experience-user", varifyUser, (req, res) => {
   });
 });
 
-// app.get("/educationDetails", varifyUser, (req, res) => {
-//   const id = req.id;
-//   const sql = "select * from education where JsId=?";
-//   db.query(sql, [id], (err, result) => {
-//     if (err) throw err;
-//     res.json({ Status: "Success", educa: result });
-//   });
-// });
-// app.get("/experienceDetails", varifyUser, (req, res) => {
-//   const id = req.id;
-//   const sql = "select * from experience where JsId=?";
-//   db.query(sql, [id], (err, result) => {
-//     if (err) throw err;
-//     res.json({ Status: "Success", exp: result });
-//   });
-// });
+app.post("/admin-register", (req, res) => {
+  bcrypt.hash(req.body.password.toString(), salt, (err, hash) => {
+    if (err) throw err;
+    const sql = "INSERT INTO admin(adminName,AdminUserName,pwd) values(?,?,?)";
+    const values = [req.body.name, req.body.email, hash];
+    db.query(sql, values, (err, result) => {
+      if (err) throw err;
+      return res.json({ Status: "Success" });
+    });
+  });
+});
+app.post("/admin-login", (req, res) => {
+  const sql = "select * from admin where AdminUserName=?";
+  db.query(sql, [req.body.email], (err, result) => {
+    if (result.length > 0) {
+      bcrypt.compare(
+        req.body.password.toString(),
+        result[0].pwd,
+        (err, response) => {
+          if (err) throw err;
+          if (response) {
+            const id = result[0].AdminId;
+            const token = jwt.sign({ id }, "key", { expiresIn: "1d" });
+            res.cookie("token", token);
+            return res.json({ Status: "Success", token });
+          } else {
+            return res.json({ Error: "Password not match" });
+          }
+        }
+      );
+    } else return res.json({ Error: "Emil not exist" });
+  });
+});
+
+const varifyAdmin = (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) return res.json({ Error: "You are not authenticated" });
+  else {
+    jwt.verify(token, "key", (err, decoded) => {
+      if (err) return res.json({ Error: "Token is not correct" });
+      else {
+        req.id = decoded.id;
+        next();
+      }
+    });
+  }
+};
+
+app.get("/adminAuth", varifyAdmin, (req, res) => {
+  return res.json({ Status: "Success" });
+});
+
+app.get("/educationDetails", varifyUser, (req, res) => {
+  const id = req.id;
+  const sql = "select * from education where JsId=?";
+  db.query(sql, [id], (err, result) => {
+    if (err) throw err;
+    return res.json({ Status: "Success", education: result });
+  });
+});
+app.get("/experienceDetails", varifyUser, (req, res) => {
+  const id = req.id;
+  const sql = "select * from experience where JsId=?";
+  db.query(sql, [id], (err, result) => {
+    if (err) throw err;
+    return res.json({ Status: "Success", experience: result });
+  });
+});
+
+app.post("/update-education", (req, res) => {
+  const sql = `UPDATE education SET DegreeName = ?, InstituteName = ?, StartDate = ?,  CompletionDate = ?, Percentage = ? WHERE EduId = ?`;
+  const value = [
+    req.body.degreeName,
+    req.body.instituteName,
+    req.body.startDate,
+    req.body.completionDate,
+    req.body.percentage,
+    req.body.id,
+  ];
+  db.query(sql, value, (err, result) => {
+    if (err) {
+      console.error("Error updating education:", err);
+      return res
+        .status(500)
+        .json({ Status: "Error", Message: "Failed to update education" });
+    }
+    return res.json({ Status: "Success" });
+  });
+});
+
+app.post("/update-experience", (req, res) => {
+  const sql = `UPDATE experience SET CompanyName = ?, JobTitle = ?, StartDate = ?, EndDate = ?, Description = ? WHERE ExpId = ?`;
+  const values = [
+    req.body.comapanyName,
+    req.body.jobTitle,
+    req.body.startDate,
+    req.body.endDate,
+    req.body.description,
+    req.body.id,
+  ];
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      console.error("Error updating education:", err);
+      return res
+        .status(500)
+        .json({ Status: "Error", Message: "Failed to update education" });
+    }
+    return res.json({ Status: "Success" });
+  });
+});
+
+app.post("/update-user-data", varifyUser, (req, res) => {
+  const id = req.id;
+  const sql =
+    "update jobseeker set JsFName= ?, JsEmail=?,Phone=?, JsExpYear=? where JsId=?";
+  const values = [
+    req.body.Name,
+    req.body.Email,
+    req.body.DOB,
+    req.body.Phone,
+    req.body.ExpYear,
+    id,
+  ];
+  db.query(sql, values, (err, result) => {
+    if (err) throw err;
+    return res.json({ Status: "Success" });
+  });
+});
+
+app.get("/allJobs", (req, res) => {
+  const sql =
+    "SELECT job.JobId ,job.JobTitle, job.workLocation, job.JobType, job.Salary, HR.CompName FROM job INNER JOIN HR ON job.HrID = HR.HrID";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    return res.json({ Status: "Success", jobs: result });
+  });
+});

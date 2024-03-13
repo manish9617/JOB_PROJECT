@@ -8,3 +8,18 @@
     height: auto;
   }
 }
+.H1 {
+  font-size: 3rem; /* Adjust the size as needed */
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-left: 50px;
+  color: #7b5dc8;
+}
+
+.H2 {
+  font-size: 4rem;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-left: 50px;
+  color: #3e0569;
+}

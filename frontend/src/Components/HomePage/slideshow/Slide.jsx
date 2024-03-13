@@ -1,11 +1,12 @@
 // Slide.js
 import React from "react";
+import styles from "./Slide.module.css";
 
 const Slide = ({ slide, isActive }) => {
   return (
     <div className={`carousel-item ${isActive ? "active" : ""}`}>
       <img
-        className="d-block w-100 rounded-4"
+        className={styles.slidebar}
         style={{ height: "400px" }}
         src={slide.imageUrl}
         alt={`Slide ${slide.id}`}

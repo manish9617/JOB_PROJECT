@@ -9,7 +9,7 @@ function UserExperience({ onSelectedTab }) {
     if (localStorage.getItem("token") != null && data === null) {
       axios.get("/experienceDetails").then((res) => {
         if (res.data.Status === "Success") {
-          setData(res.data.exp);
+          setData(res.data.experience);
         }
       });
     }
@@ -38,7 +38,7 @@ function UserExperience({ onSelectedTab }) {
         </button>
       </div>
       {data === null ? (
-        <center>Data is loading</center>
+        <center>No data avalibale</center>
       ) : (
         <>
           {data.length === 0 ? (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./education.css";
 import { FaRegEdit } from "react-icons/fa";
-
+import axios from "axios";
 function Education({ education }) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -10,6 +10,7 @@ function Education({ education }) {
     startDate: education.StartDate,
     completionDate: education.CompletionDate,
     percentage: education.Percentage,
+    id: education.EduId,
   });
 
   const handlePopUp = () => {
@@ -18,7 +19,11 @@ function Education({ education }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Your form submission logic here
+    axios.post("/update-education", formData).then((res) => {
+      if (res.data.Status === "Success") {
+        location.reload(true);
+      }
+    });
   };
 
   const handleInputChange = (e) => {
@@ -145,6 +150,7 @@ function Education({ education }) {
                     <button
                       type="submit"
                       className="btn btn-dark w-100 mb-2 me-2 bg-primary"
+                      onClick={handleSubmit}
                     >
                       Update
                     </button>

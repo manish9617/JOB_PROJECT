@@ -9,7 +9,7 @@ function UserEducation({ onSelectedTab }) {
     if (localStorage.getItem("token") != null && data === null) {
       axios.get("/educationDetails").then((res) => {
         if (res.data.Status === "Success") {
-          setData(res.data.educa);
+          setData(res.data.education);
         }
       });
     }
@@ -29,7 +29,7 @@ function UserEducation({ onSelectedTab }) {
         </button>
       </div>
       {data === null ? (
-        <center>Data is loading</center>
+        <center>Loading</center>
       ) : (
         <>
           {data.length === 0 ? (

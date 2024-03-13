@@ -15,7 +15,6 @@ function AddEducation({ onSelectedTab }) {
   });
   const [certificate, setCertificate] = useState(null);
   const handleSubmit = (e) => {
-    console.log(insertId);
     e.preventDefault();
     const formdata = new FormData();
     formdata.append("DegreeName", formData.degreeName);
@@ -25,14 +24,15 @@ function AddEducation({ onSelectedTab }) {
     formdata.append("Percentage", formData.percentage);
     formdata.append("DegreeFile", certificate);
     formdata.append("JsId", insertId);
-    // axios
-    //   .post("/postdata-education-user", formdata, {
-    //     headers: { "Content-Type": "multipart/form-data" },
-    //   })
-    //   .then((res) => {
-    //     if (res.data.Status == "Success") navigate("/experience");
-    //     else alert(res.data.Error);
-    //   });
+    axios
+      .post("/postdata-education-user", formdata, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((res) => {
+        if (res.data.Status == "Success") {
+          onSelectedTab("education");
+        } else alert(res.data.Error);
+      });
   };
 
   const handleInputChange = (e) => {
@@ -154,7 +154,7 @@ function AddEducation({ onSelectedTab }) {
               type="submit"
               className="btn btn-dark w-100 mb-2 me-2 bg-primary"
             >
-              REGISTER
+              ADD
             </button>
             <button
               type="cancel"

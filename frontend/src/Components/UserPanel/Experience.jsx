@@ -4,13 +4,11 @@ import { FaRegEdit } from "react-icons/fa";
 function Experience({ exp }) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
-    JsId: "",
-    jobTitle: "",
-    comapanyName: "",
-    startDate: "",
-    endDate: "",
-    experience: "",
-    description: "",
+    jobTitle: exp.JobTitle,
+    comapanyName: exp.CompanyName,
+    startDate: exp.StartDate,
+    endDate: exp.EndDate,
+    description: exp.Description,
   });
 
   const handlePopUp = () => {
@@ -56,7 +54,7 @@ function Experience({ exp }) {
 
       {isOpen && (
         <div className="popup-wrapper mt-5">
-          <div className="popup" style={{ maxHeight: "90vh" }}>
+          <div className="popup" style={{ maxHeight: "80vh" }}>
             <button className="close-btn" onClick={handlePopUp}>
               X
             </button>
@@ -72,6 +70,7 @@ function Experience({ exp }) {
                       className="form-control"
                       id="jobTitle"
                       name="jobTitle"
+                      defaultValue={formData.jobTitle}
                       placeholder="Job Role"
                       required
                       onChange={handleInputChange}
@@ -86,6 +85,7 @@ function Experience({ exp }) {
                       className="form-control"
                       id="companyName"
                       name="companyName"
+                      defaultValue={formData.comapanyName}
                       placeholder="Company Name"
                       required
                       onChange={handleInputChange}
@@ -101,6 +101,7 @@ function Experience({ exp }) {
                         className="form-control"
                         id="startDate"
                         name="startDate"
+                        defaultValue={formData.startDate}
                         required
                         onChange={handleInputChange}
                       />
@@ -114,25 +115,13 @@ function Experience({ exp }) {
                         className="form-control"
                         id="endDate"
                         name="endDate"
+                        defaultValue={formData.endDate}
                         required
                         onChange={handleInputChange}
                       />
                     </div>
                   </div>
-                  <div className="mb-3">
-                    <label htmlFor="adhar" className="form-label">
-                      Experience
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="experience"
-                      name="experience"
-                      placeholder="How many years of experience have you had?"
-                      required
-                      onChange={handleInputChange}
-                    />
-                  </div>
+
                   <div className="mb-3">
                     <label htmlFor="description" className="form-label">
                       Description
@@ -142,6 +131,7 @@ function Experience({ exp }) {
                       className="form-control"
                       id="description"
                       name="description"
+                      defaultValue={formData.description}
                       placeholder="Description"
                       onChange={handleInputChange}
                     />

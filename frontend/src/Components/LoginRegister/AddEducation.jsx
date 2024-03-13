@@ -1,11 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AllFunction } from "../store/store";
 
 function AddEducation() {
+  axios.defaults.withCredentials = true;
   const navigate = useNavigate();
-  const { insertId } = useContext(AllFunction);
   const [formData, setFormData] = useState({
     degreeName: "",
     instituteName: "",
@@ -15,16 +14,14 @@ function AddEducation() {
   });
   const [certificate, setCertificate] = useState(null);
   const handleSubmit = (e) => {
-    console.log(insertId);
     e.preventDefault();
     const formdata = new FormData();
     formdata.append("DegreeName", formData.degreeName);
     formdata.append("InstituteName", formData.instituteName);
     formdata.append("StartDate", formData.startDate);
-    formdata.append(".CompletionDate", formData.completionDate);
+    formdata.append("CompletionDate", formData.completionDate);
     formdata.append("Percentage", formData.percentage);
     formdata.append("DegreeFile", certificate);
-    formdata.append("JsId", insertId);
     axios
       .post("/postdata-education-user", formdata, {
         headers: { "Content-Type": "multipart/form-data" },

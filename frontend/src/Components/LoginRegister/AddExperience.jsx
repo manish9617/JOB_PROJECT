@@ -1,13 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AllFunction } from "../store/store";
 
 function AddExperience() {
   const navigate = useNavigate();
-  const { insertId } = useContext(AllFunction);
   const [formData, setFormData] = useState({
-    JsId: insertId,
     jobTitle: "",
     comapanyName: "",
     startDate: "",
@@ -19,7 +16,7 @@ function AddExperience() {
     e.preventDefault();
 
     axios.post("/postdata-experience-user", formData).then((res) => {
-      if (res.data.Status == "Success") navigate("/login");
+      if (res.data.Status == "Success") navigate("/");
       else alert(res.data.Error);
     });
   };
@@ -146,7 +143,7 @@ function AddExperience() {
             <button
               className="btn btn-dark w-100 mb-2 ms-2 bg-primary"
               onClick={() => {
-                navigate("/login");
+                navigate("/");
               }}
             >
               SKIP

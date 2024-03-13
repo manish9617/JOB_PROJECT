@@ -4,7 +4,7 @@ import axios from "axios";
 import { AllFunction } from "../store/store";
 const Register = () => {
   const navigate = useNavigate();
-  const { insertId, handleInsertId } = useContext(AllFunction);
+  const { handleAuth } = useContext(AllFunction);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -19,29 +19,46 @@ const Register = () => {
   const [resume, setResume] = useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formdata = new FormData();
-    formdata.append("firstName", formData.firstName);
-    formdata.append("lastName", formData.lastName);
-    formdata.append("phone", formData.phone);
-    formdata.append("email", formData.email);
-    formdata.append("password", formData.password);
-    formdata.append("dob", formData.dob);
-    formdata.append("gender", formData.gender);
-    formdata.append("adhar", formData.adhar);
-    formdata.append("resume", resume);
-    formdata.append("experience", formData.experience);
-    await axios
-      .post("/postdata-user", formdata, {
+
+    try {
+      const formdata = new FormData();
+      formdata.append("firstName", formData.firstName);
+      formdata.append("lastName", formData.lastName);
+      formdata.append("phone", formData.phone);
+      formdata.append("email", formData.email);
+      formdata.append("password", formData.password);
+      formdata.append("dob", formData.dob);
+      formdata.append("gender", formData.gender);
+      formdata.append("adhar", formData.adhar);
+      formdata.append("resume", resume);
+      formdata.append("experience", formData.experience);
+
+      const res = await axios.post("/postdata-user", formdata, {
         headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((res) => {
-        if (res.data.Status == "Success") {
-          // console.log(res.data.id);
-          handleInsertId(res.data.id);
-          // console.log(insertId);
-          navigate("/education");
-        } else alert(res.data.Error);
       });
+
+      if (res.data.Status === "Success") {
+        const data = {
+          JsFName: formdata.get("firstName"),
+          JsLName: formdata.get("lastName"),
+          JsEmail: formdata.get("email"),
+          DOB: formdata.get("dob"),
+          Phone: formdata.get("phone"),
+          JsExpYear: formdata.get("experience"),
+        };
+        console.log("token", res.data.token);
+        console.log("info", JSON.stringify(data));
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("info", JSON.stringify(data));
+        handleAuth("user", true);
+        navigate("/education");
+      } else {
+        throw new Error(res.data.Error || "Unknown error occurred");
+      }
+    } catch (error) {
+      console.error("Error while submitting form:", error);
+      alert("An error occurred while submitting the form. Please try again.");
+    }
   };
 
   const handleInputChange = (e) => {

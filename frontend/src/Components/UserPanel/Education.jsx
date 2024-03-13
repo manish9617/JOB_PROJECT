@@ -5,11 +5,11 @@ import { FaRegEdit } from "react-icons/fa";
 function Education({ education }) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
-    degreeName: "",
-    instituteName: "",
-    startDate: "",
-    completionDate: "",
-    percentage: "",
+    degreeName: education.DegreeName,
+    instituteName: education.InstituteName,
+    startDate: education.StartDate,
+    completionDate: education.CompletionDate,
+    percentage: education.Percentage,
   });
 
   const handlePopUp = () => {
@@ -75,6 +75,7 @@ function Education({ education }) {
                       className="form-control"
                       id="degreeName"
                       name="degreeName"
+                      defaultValue={formData.degreeName}
                       placeholder="Degree / Certificate Name"
                       required
                       onChange={handleInputChange}
@@ -89,6 +90,7 @@ function Education({ education }) {
                       className="form-control"
                       id="instituteName"
                       name="instituteName"
+                      defaultValue={formData.instituteName}
                       placeholder="Institute Name"
                       required
                       onChange={handleInputChange}
@@ -104,6 +106,7 @@ function Education({ education }) {
                         className="form-control"
                         id="startDate"
                         name="startDate"
+                        defaultValue={formData.startDate}
                         required
                         onChange={handleInputChange}
                       />
@@ -117,6 +120,7 @@ function Education({ education }) {
                         className="form-control"
                         id="completionDate"
                         name="completionDate"
+                        defaultValue={formData.completionDate}
                         required
                         onChange={handleInputChange}
                       />
@@ -131,6 +135,7 @@ function Education({ education }) {
                       className="form-control"
                       id="percentage"
                       name="percentage"
+                      defaultValue={formData.percentage}
                       placeholder="Percentage"
                       required
                       onChange={handleInputChange}

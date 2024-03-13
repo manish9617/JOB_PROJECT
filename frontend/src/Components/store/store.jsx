@@ -4,7 +4,6 @@ export const AllFunction = createContext({
   handleAuth: () => {},
   handleHrData: () => {},
   handleHrPostJobData: () => {},
-  handleInsertId: () => {},
   handleUserdata: () => {},
 });
 const FunctionProvider = ({ children }) => {
@@ -24,18 +23,13 @@ const FunctionProvider = ({ children }) => {
   const handleUserdata = (data) => {
     setUserData(data);
   };
-  const [insertId, setInsertId] = useState(0);
+
   const handleHrData = (data) => {
     setHrData(data);
   };
-  const handleInsertId = async (id) => {
-    try {
-      await setInsertId(id);
-    } catch (error) {
-      throw error;
-    }
-  };
+
   const handleAuth = (type, temp) => {
+    console.log(type, temp);
     if (type === "user") setUserAuth(temp);
     else setHrAuth(temp);
   };
@@ -53,8 +47,6 @@ const FunctionProvider = ({ children }) => {
         hrData,
         handleHrPostJobData,
         hrPostjobData,
-        insertId,
-        handleInsertId,
         handleUserdata,
         userData,
       }}

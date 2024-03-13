@@ -23,7 +23,6 @@ function Home() {
       });
     }
   });
-
   return (
     <>
       <Slideshow></Slideshow>

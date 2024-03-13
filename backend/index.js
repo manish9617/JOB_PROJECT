@@ -68,7 +68,11 @@ app.post("/postdata-user", upload.single("resume"), (req, res) => {
       }
       // console.log(result.insertId);
       // console.log("New record inserted:", result);
-      res.json({ Status: "Success", id: result.insertId });
+      const token = jwt.sign({ id: result.insertId, type: "user" }, "key", {
+        expiresIn: "1d",
+      });
+      res.cookie("token", token);
+      res.json({ Status: "Success", token });
     });
   });
 });
@@ -286,13 +290,15 @@ app.get("/AllApplicant/:id", (req, res) => {
 
 app.post(
   "/postdata-education-user",
+  varifyUser,
   upload.single("DegreeFile"),
   (req, res) => {
-    console.log(req.body.JsId);
+    const id = req.id;
+    console.log("hello", id);
     const sql =
       "insert into education (JsId,DegreeName, InstituteName,StartDate,CompletionDate,DegreeFile,Percentage) values (?,?,?,?,?,?,?)";
     const values = [
-      req.body.JsId,
+      id,
       req.body.DegreeName,
       req.body.InstituteName,
       req.body.StartDate,
@@ -308,11 +314,12 @@ app.post(
   }
 );
 
-app.post("/postdata-experience-user", (req, res) => {
+app.post("/postdata-experience-user", varifyUser, (req, res) => {
+  const id = req.id;
   const sql =
     "insert into experience (JsId, StartDate,EndDate,JobTitle,CompanyName,Description) values (?,?,?,?,?,?)";
   const values = [
-    req.body.JsId,
+    id,
     req.body.startDate,
     req.body.endDate,
     req.body.jobTitle,
@@ -325,19 +332,19 @@ app.post("/postdata-experience-user", (req, res) => {
   });
 });
 
-app.get("/educationDetails", varifyUser, (req, res) => {
-  const id = req.id;
-  const sql = "select * from education where JsId=?";
-  db.query(sql, [id], (err, result) => {
-    if (err) throw err;
-    res.json({ Status: "Success", educa: result });
-  });
-});
-app.get("/experienceDetails", varifyUser, (req, res) => {
-  const id = req.id;
-  const sql = "select * from experience where JsId=?";
-  db.query(sql, [id], (err, result) => {
-    if (err) throw err;
-    res.json({ Status: "Success", exp: result });
-  });
-});
+// app.get("/educationDetails", varifyUser, (req, res) => {
+//   const id = req.id;
+//   const sql = "select * from education where JsId=?";
+//   db.query(sql, [id], (err, result) => {
+//     if (err) throw err;
+//     res.json({ Status: "Success", educa: result });
+//   });
+// });
+// app.get("/experienceDetails", varifyUser, (req, res) => {
+//   const id = req.id;
+//   const sql = "select * from experience where JsId=?";
+//   db.query(sql, [id], (err, result) => {
+//     if (err) throw err;
+//     res.json({ Status: "Success", exp: result });
+//   });
+// });

@@ -26,7 +26,7 @@ const PostJob = () => {
     e.preventDefault();
     axios.post("/job-post", formData).then((res) => {
       if (res.data.Status === "Success") {
-        addHrPostJob(formData);
+        // addHrPostJob(formData);
         location.href = "/Hr";
       }
     });

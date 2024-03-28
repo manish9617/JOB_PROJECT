@@ -13,10 +13,10 @@ export default function Card({ obj }) {
   const jobType = obj.workLocation;
   const jobTIme = obj.JobType;
   const minimum = obj.Salary;
-  const handleApply = async () => {
-    handleApplyJob(obj.JobId);
-    window.location.href = "/AllJobs/apply";
-  };
+  // const handleApply = async () => {
+  //   handleApplyJob(obj.JobId);
+  //   window.location.href = "/AllJobs/apply";
+  // };
   return (
     <div className={style.card}>
       <div className={`d-flex justify-content-between ${style.header}`}>
@@ -31,9 +31,11 @@ export default function Card({ obj }) {
           </div>
         </div>
         <div>
-          <button className={style.closeButton} onClick={handleApply}>
-            <SlArrowRight />
-          </button>
+          <Link to="apply">
+            <button className={style.closeButton}>
+              <SlArrowRight />
+            </button>
+          </Link>
         </div>
       </div>
       <div className="d-flex align-items-center mt-2 ms-1">

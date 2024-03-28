@@ -478,3 +478,9 @@ app.get("/allJobs", (req, res) => {
     return res.json({ Status: "Success", jobs: result });
   });
 });
+
+app.get("/allApplication", varifyUser, (req, res) => {
+  const id = req.id;
+
+  return res.json({ Status: "Success" });
+});

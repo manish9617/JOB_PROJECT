@@ -29,13 +29,7 @@ const UserSideBar = ({ onSelectedTab }) => {
           Profile
         </li>
         <div className={styles.line}></div>
-        {/* <li
-          onClick={() => {
-            onSelectedTab("skills");
-          }}
-        >
-          Skills
-        </li> */}
+
         <br />
         <li
           onClick={() => {
@@ -57,10 +51,20 @@ const UserSideBar = ({ onSelectedTab }) => {
           Experience details
         </li>
         <div className={styles.line}></div>
+        <br />
+        <li
+          onClick={() => {
+            onSelectedTab("allApllcation");
+          }}
+          className={styles.sidename}
+        >
+          All application
+        </li>
+        <div className={styles.line}></div>
       </ul>
       <br />
 
-      {!userAuth && (
+      {userAuth && (
         <button className={styles.btn} onClick={handleLogout}>
           Logout
         </button>

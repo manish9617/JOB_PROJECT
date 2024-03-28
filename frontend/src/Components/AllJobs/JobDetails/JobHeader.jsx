@@ -2,8 +2,16 @@
 
 import React from "react";
 import styles from "./JobHeader.module.css";
-
+import { toast } from "react-toastify";
 const JobHeader = () => {
+  function handleApply() {
+    toast.success("Applied", {
+      autoClose: 1000,
+      onClose: () => {
+        window.location.href = "/AllJobs";
+      },
+    });
+  }
   return (
     <header className={styles.h11}>
       <div className={styles.HH}>
@@ -12,7 +20,9 @@ const JobHeader = () => {
         </div>
 
         <div className={styles.btn1}>
-          <button className={styles.but}>Apply Now</button>
+          <button className={styles.but} onClick={handleApply}>
+            Apply Now
+          </button>
         </div>
       </div>
     </header>

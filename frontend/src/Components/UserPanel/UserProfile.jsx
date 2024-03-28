@@ -29,7 +29,6 @@ function UserProfile() {
         if (res.data.Status === "Success") {
           handleUserdata(res.data.info);
           setName(res.data.info.JsFName);
-          setDOB(new Date(res.data.info.DOB).toLocaleDateString());
           setEmail(res.data.info.JsEmail);
           setPhone(res.data.info.Phone);
           setExpYear(res.data.info.JsExpYear);

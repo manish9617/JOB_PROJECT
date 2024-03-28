@@ -2,7 +2,7 @@
 const SlideData = [
   {
     id: 1,
-    imageUrl: "/public/slide1.png",
+    imageUrl: "/public/gradient4.png",
   },
 ];
 

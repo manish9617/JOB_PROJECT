@@ -7,6 +7,7 @@ import { AllFunction } from "../store/store";
 
 export default function PostedJobs({ job, onSelectTab, handleJobId }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  console.log(job);
   const [formData, setFormData] = useState({
     JobId: job.JobId,
     JobTitle: job.JobTitle,
@@ -79,7 +80,7 @@ export default function PostedJobs({ job, onSelectTab, handleJobId }) {
       <div className="vertical-line"></div>
       <div className="w-[12%]">
         <h1 className="p-1 text-xm font-bold">Last Date</h1>
-        <h1 className="p-1">{new Date(job.LastDate).toLocaleDateString()}</h1>
+        <h1 className="p-1">{new Date(job.lastDate).toLocaleDateString()}</h1>
       </div>
       <div className="vertical-line"></div>
       <div className="w-[10%]">

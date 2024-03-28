@@ -12,7 +12,7 @@ const FunctionProvider = ({ children }) => {
   const [userAuth, setUserAuth] = useState(false);
   const [hrAuth, setHrAuth] = useState(false);
   const [allJobs, setAllJobs] = useState(null);
-  const [jobId, setJobId] = useState(0);
+  const [jobId, setJobId] = useState(null);
   const handleAllJobs = (data) => {
     setAllJobs(data);
   };

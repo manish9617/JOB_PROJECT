@@ -4,6 +4,7 @@ import UserExperience from "./UserExperience";
 import UserProfile from "./UserProfile";
 import AddEducation from "./AddEducation";
 import AddExperience from "./AddExperience";
+import AllApplication from "./AllApplication";
 
 function UserDetils({ tab, onSelectedTab }) {
   return (
@@ -20,6 +21,9 @@ function UserDetils({ tab, onSelectedTab }) {
       )}
       {tab === "addExperience" && (
         <AddExperience onSelectedTab={onSelectedTab}></AddExperience>
+      )}
+      {tab === "allApllcation" && (
+        <AllApplication onSelectedTab={onSelectedTab}></AllApplication>
       )}
     </div>
   );
